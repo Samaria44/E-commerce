@@ -77,7 +77,7 @@ exports.getNewArrivals = async (req, res) => {
   try {
     const newProducts = await Product.find()
       .sort({ createdAt: -1 }) // newest first
-      .limit(5); // latest 5 products
+      .limit(6); // latest 5 products
     res.json(newProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
