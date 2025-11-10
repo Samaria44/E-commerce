@@ -1,0 +1,104 @@
+/* === Search Results Page === */
+.search-results {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.search-results h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #141313;
+}
+
+.search-results span {
+  color: #ff4c29;
+}
+
+.search-results p {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+/* === Product Grid for Search === */
+.search-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+  justify-content: center;
+}
+
+/* === Product Card for Search === */
+.search-product-card {
+  background:rgb(54, 52, 52);
+border-radius: 5%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+      width: 323px
+}
+
+.search-product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(27, 26, 26, 0.15);
+}
+
+.search-product-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.search-product-card:hover img {
+  transform: scale(1.05);
+}
+
+.search-product-card h3 {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 12px 0 4px 0;
+  font-weight: 500;
+}
+
+.search-product-card p {
+  color: #f9f4f4;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .search-results {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .search-results h2 {
+    font-size: 22px;
+  }
+
+  .search-products-grid {
+    gap: 15px;
+  }
+
+  .search-product-card img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-product-card h3 {
+    font-size: 16px;
+  }
+
+  .search-product-card p {
+    font-size: 13px;
+  }
+}

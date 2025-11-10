@@ -1,0 +1,236 @@
+/* === Navbar Container === */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: #fffdfd;
+  flex-wrap: wrap;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* === Logo === */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* === Sticky Navbar Wrapper === */
+.navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+/* When scrolled */
+.navbar-wrapper.sticky {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* === Navigation Links === */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.nav-links li {
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.nav-links a,
+.dropdown-toggle {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 17px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 10px;
+  transition: color 0.3s;
+}
+
+/* Remove gray hover background on Category */
+.dropdown-toggle:hover {
+  background: transparent;
+  color: #e91e63;
+}
+
+.nav-links a:hover {
+  color: #e91e63;
+}
+
+/* === Active Link === */
+.active-link {
+  color: #e91e63;
+  font-weight: 600;
+  position: relative;
+}
+
+.active-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #e91e63;
+  border-radius: 2px;
+}
+
+/* === Dropdown Menu === */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  list-style: none;
+  padding: 8px 0;
+  background: #fff; /* white dropdown box */
+  border: 1px solid #eee;
+  border-radius: 8px;
+  min-width: 150px;
+  z-index: 10;
+}
+
+.has-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 6px 15px;
+}
+
+.dropdown-menu a {
+  display: block;
+  width: 100%;
+  color: #444;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* Remove gray hover box inside dropdown */
+.dropdown-menu li:hover {
+  background: transparent;
+}
+
+.dropdown-menu a:hover {
+  color: #e91e63;
+}
+
+/* === Dropdown Arrow === */
+.arrow {
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+
+.has-dropdown:hover .arrow {
+  transform: rotate(180deg);
+}
+
+/* === Search & Icons === */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-input {
+  padding: 8px 15px;
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  outline: none;
+  width: 240px;
+  transition: width 0.3s ease;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.nav-actions i {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* === Cart Icon === */
+.cart-icon {
+  position: relative;
+  font-size: 1.5rem;
+  color: #111;
+  margin-right: 20px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #ff3e6c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* === Mobile Menu Button === */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    background: white;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .search-input {
+    width: 150px;
+  }
+}
+

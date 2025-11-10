@@ -1,0 +1,143 @@
+
+.user-table-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+  margin-left: 60px;
+  padding-bottom: 40px;
+ 
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 50px 19px 10px;
+   margin-left: 162px;
+    margin-top: 83px;
+}
+
+.user-title {
+  font-size: 25px;
+  font-weight: 600;
+  color: #333;
+}
+
+.count {
+  font-size: 14px;
+  color: #888;
+  margin-left: 8px;
+}
+
+.add-btn {
+  background-color: #111;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #333;
+}
+
+.user-table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-left: 160px;
+}
+
+.user-table th,
+.user-table td {
+  text-align: left;
+  padding: 14px 20px;
+}
+
+.user-table thead {
+  background: #f4f6f8;
+  color: #333;
+}
+
+.user-table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.user-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* Action Icons */
+.edit,
+.delete {
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.edit {
+  color: #007bff;
+}
+
+.delete {
+  color: #e74c3c;
+}
+
+/* Popup Form */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-form {
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.popup-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.save-btn {
+  width: 100%;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #333;
+}

@@ -1,0 +1,222 @@
+/* === Carousel Container === */
+.carousel-container {
+  width: 100%;
+  background: #f8f8f8;
+  padding: 3rem 5%;
+  box-sizing: border-box;
+}
+
+/* === Header Section (Title + Arrows) === */
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.carousel-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.carousel-arrows {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-arrows button {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.carousel-arrows button:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* === Scroll Section === */
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* === Product Card === */
+.carousel-card {
+  flex: 0 0 auto;
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.carousel-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* === Product Image === */
+.carousel-card img {
+  width: 100%;
+  height: 316px;
+  object-fit: cover;
+  padding: 12px;
+  border-radius: 14px;
+}
+
+/* === Info Section === */
+.carousel-card-info {
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carousel-card-info h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 3px;
+}
+
+/* === Price + Cart === */
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.price {
+  font-weight: 700;
+  color: #111;
+  font-size: 1rem;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* === Cart Button === */
+.cart-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: #ff6f61;
+  transform: scale(1.08);
+}
+
+/* === Responsive Design === */
+
+/* Large Tablets / Small Laptops */
+@media (max-width: 1024px) {
+  .carousel-container {
+    padding: 2.5rem 4%;
+  }
+
+  .carousel-card {
+    width: 260px;
+  }
+
+  .carousel-card img {
+    height: 220px;
+  }
+
+  .carousel-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 2rem 3%;
+  }
+
+  .carousel-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .carousel-card {
+    width: 220px;
+  }
+
+  .carousel-card img {
+    height: 180px;
+  }
+
+  .carousel-card-info {
+    padding: 0.9rem;
+  }
+
+  .price {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 1.5rem 2%;
+  }
+
+  .carousel-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .carousel-card {
+    width: 180px;
+  }
+
+  .carousel-card img {
+    height: 160px;
+  }
+
+  .carousel-card-info {
+    padding: 0.8rem;
+  }
+
+  .cart-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
