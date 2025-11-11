@@ -7,13 +7,20 @@ const orderSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   paymentMethod: { type: String },
-  products: [
+  // products: [
+  //   {
+  //     name: { type: String, required: true },
+  //     price: { type: Number, required: true },
+  //     qty: { type: Number, required: true },
+  //     size: { type: String },
+  //     image: { type: String },
+  //   },
+  // ],
+   products: [
     {
-      name: { type: String, required: true },
-      price: { type: Number, required: true },
-      qty: { type: Number, required: true },
-      size: { type: String },
-      image: { type: String },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'product'
+      
     },
   ],
   totalAmount: { type: Number, required: true },

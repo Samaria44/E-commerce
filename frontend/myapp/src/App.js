@@ -30,7 +30,7 @@ import Orders from "./Admin/Admincomponents/Order";
 import Users from "./Admin/Admincomponents/Users";
 import OrderDetail from "./Admin/Admincomponents/Orderdetail";
 import AdminLayout from "./Admin/Admincomponents/Adminlayout";
-import NewArrivals from "./pages/newArrival";
+import NewArrivals from "./pages/NewArrivals";
 
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
       element: <AppLayout />,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/newArrival", element: <NewArrivals/> },
+        { path: "/products/new", element: <NewArrivals/> },
         { path: "/MostWanted", element: <Mostwanted /> },
 
         {

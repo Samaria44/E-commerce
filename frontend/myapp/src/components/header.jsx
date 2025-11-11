@@ -80,7 +80,7 @@ const Header = () => {
           </li>
 
           <li>
-            <NavLink to="/newArrival" className={({ isActive }) => (isActive ? "active-link" : "")}>
+            <NavLink to="products/new" className={({ isActive }) => (isActive ? "active-link" : "")}>
               New Arrival
             </NavLink>
           </li>

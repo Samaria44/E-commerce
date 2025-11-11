@@ -3,10 +3,11 @@ const Order = require("../models/orderModel");
 // Get all orders
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate('products.product');
+
     res.json(orders);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message }).populate(product);
   }
 };
 
@@ -29,7 +30,9 @@ exports.addOrder = async (req, res) => {
     const newOrder = new Order(req.body);
     const savedOrder = await newOrder.save();
 
-    res.status(201).json({ message: "Order placed successfully", order: savedOrder });
+    res
+      .status(201)
+      .json({ message: "Order placed successfully", order: savedOrder });
   } catch (err) {
     console.error(" Order Save Error:", err);
     res.status(500).json({ message: err.message });
@@ -39,7 +42,9 @@ exports.addOrder = async (req, res) => {
 // Update order (status change)
 exports.updateOrder = async (req, res) => {
   try {
-    const updated = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Order.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updated) return res.status(404).json({ message: "Order not found" });
     res.json({ message: "Order updated successfully", order: updated });
   } catch (err) {
