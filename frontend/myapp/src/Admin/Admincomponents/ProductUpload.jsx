@@ -143,7 +143,7 @@ export default function ProductUpload() {
             <th>Image</th>
             <th>Name</th>
             <th>Category</th>
-            <th>Subcategory</th> {/* ✅ Added Subcategory column */}
+            <th>Subcategory</th> 
             <th>Price</th>
             <th>Description</th>
             <th>Action</th>
@@ -165,7 +165,7 @@ export default function ProductUpload() {
               </td>
               <td>{p.name}</td>
               <td>{p.category}</td>
-              <td>{p.subCategory}</td> {/* ✅ Display subCategory */}
+              <td>{p.subCategory}</td> 
               <td>{p.price}</td>
               <td>{p.description}</td>
               <td className="actions">

@@ -1,3 +1,5 @@
+//productController
+
 const Product = require("../models/productModel");
 
 // Get all products
