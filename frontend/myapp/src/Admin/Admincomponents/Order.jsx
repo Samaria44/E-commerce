@@ -78,7 +78,6 @@ export default function Orders() {
             <th>Customer</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Image</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -104,26 +103,7 @@ export default function Orders() {
                 <td>{order.customer}</td>
                 <td>{order.email}</td>
                 <td>{order.phone}</td>
-                <td>
-                  {order.products && order.products.length > 0 && order.products[0].image ? (
-                    <img
-                      src={
-                        order.products[0].image.startsWith("http")
-                          ? order.products[0].image
-                          : `http://localhost:8000${order.products[0].image}`
-                      }
-                      alt={order.products[0].name || "Product"}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "6px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  ) : (
-                    "No image"
-                  )}
-                </td>
+              
 
                 <td>
                   <select
