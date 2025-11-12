@@ -15,30 +15,30 @@ export default function CategoryCarousel() {
     }
   };
 
+  // ✅ Your backend origin (for image correction or dynamic linking)
+  const BACKEND_ORIGIN = "http://localhost:8000";
+
+  // ✅ Define categories that match backend
   const categories = [
     {
-      title: "Shop Men",
-      image:
-        "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg",
-      url: "/Men",
+      title: "Men",
+      image: "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg",
+      route: "/category/Men",
     },
     {
-      title: "Shop Women",
-      image:
-        "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",
-      url: "/Women",
+      title: "Women",
+      image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",
+      route: "/category/women",
     },
     {
-      title: "Shop Office",
-      image:
-        "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=600&q=80",
-      url: "/Office",
+      title: "Office Collection",
+      image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=600&q=80",
+      route: "/category/Office",
     },
     {
       title: "Summer Collection",
-      image:
-        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
-      url: "/summer",
+      image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+      route: "/category/Summer",
     },
   ];
 
@@ -57,12 +57,12 @@ export default function CategoryCarousel() {
           <div
             key={i}
             className="carousel-category-card"
-            onClick={() => navigate(cat.url)}
+            onClick={() => navigate(cat.route)}
           >
             <img src={cat.image} alt={cat.title} />
             <div className="overlay">
               <span>{cat.title}</span>
-               <span className="arrow">→</span>
+              <span className="arrow">→</span>
             </div>
           </div>
         ))}

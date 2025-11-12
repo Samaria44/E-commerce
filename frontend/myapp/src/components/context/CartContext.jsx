@@ -8,30 +8,31 @@ export default function CartProvider({ children }) {
     return saved ? JSON.parse(saved) : [];
   });
 
-  //  Persist to localStorage
+  // Persist to localStorage
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   // ➕ Add product to cart
   const addToCart = (product) => {
+    const key = `${product.id}-${product.size || ""}-${product.color || ""}-${product.subcategory || ""}`;
     setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      const productPrice = Number(product.price) || 0;
+      const existing = prev.find((item) => item.key === key);
 
       if (existing) {
+        // If same variation exists, just increase qty
         return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, qty: Number(item.qty) + 1 }
-            : item
+          item.key === key ? { ...item, qty: item.qty + 1 } : item
         );
       } else {
+        // Add new product with unique key
         return [
           ...prev,
           {
             ...product,
-            price: productPrice,
+            key,
             qty: 1,
+            price: Number(product.price) || 0,
           },
         ];
       }
@@ -39,18 +40,18 @@ export default function CartProvider({ children }) {
   };
 
   // ❌ Remove product
-  const removeFromCart = (id) =>
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (key) => {
+    setCartItems((prev) => prev.filter((item) => item.key !== key));
+  };
 
-  // 🔄 Update quantity safely
-  const updateQuantity = (id, newQty) =>
+  // 🔄 Update quantity
+  const updateQuantity = (key, qty) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === id
-          ? { ...item, qty: Math.max(1, Number(newQty) || 1) } // Prevent invalid qty
-          : item
+        item.key === key ? { ...item, qty: Math.max(1, qty) } : item
       )
     );
+  };
 
   // 🧹 Clear cart
   const clearCart = () => {
@@ -58,20 +59,9 @@ export default function CartProvider({ children }) {
     localStorage.removeItem("cartItems");
   };
 
-  // 🧮 Count total items
-  const cartCount = cartItems.reduce(
-    (total, item) => total + (Number(item.qty) || 0),
-    0
-  );
-
-  // 💰 Total price helper (you can reuse in other places if needed)
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + (Number(item.price) || 0) * (Number(item.qty) || 0),
-    0
-  );
-
-  console.log(" Cart Items:", cartItems);
-  console.log(" Total Price:", totalPrice);
+  // 🧮 Total price & count
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
     <CartContext.Provider
@@ -81,8 +71,8 @@ export default function CartProvider({ children }) {
         removeFromCart,
         updateQuantity,
         clearCart,
+        totalPrice,
         cartCount,
-        totalPrice, // ✅ optional — makes it easier to access in checkout/cart page
       }}
     >
       {children}
@@ -90,5 +80,5 @@ export default function CartProvider({ children }) {
   );
 }
 
-// Custom hook for using cart
+// Custom hook
 export const useCart = () => useContext(CartContext);

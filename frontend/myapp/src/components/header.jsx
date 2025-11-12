@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./header.css";
 import { useCart } from "./context/CartContext";
 
@@ -10,8 +11,22 @@ const Header = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("authToken");
   const [isSticky, setIsSticky] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  // ✅ Handle search
+  // Fetch categories dynamically
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/categories");
+      setCategories(res.data);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim() !== "") {
@@ -19,26 +34,14 @@ const Header = () => {
     }
   };
 
-  // ✅ Sticky Navbar Effect
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
+    const handleScroll = () => setIsSticky(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ Close menu on resize
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setMenuOpen(false);
-      }
-    };
+    const handleResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -50,12 +53,10 @@ const Header = () => {
           <i className="fa-solid fa-play"></i> Logo
         </div>
 
-        {/* Mobile Menu Icon */}
         <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
           <i className="fa-solid fa-bars"></i>
         </div>
 
-        {/* Navigation Links */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
             <NavLink to="/" className={({ isActive }) => (isActive ? "active-link" : "")}>
@@ -66,16 +67,28 @@ const Header = () => {
           <li className="has-dropdown">
             <button className="dropdown-toggle">Category</button>
             <ul className="dropdown-menu">
-              <li>
-                <NavLink to="/Men" className={({ isActive }) => (isActive ? "active-link" : "")}>
-                  Men
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/Women" className={({ isActive }) => (isActive ? "active-link" : "")}>
-                  Women
-                </NavLink>
-              </li>
+              {categories.map((cat) => (
+                <li key={cat._id} className="has-sub-dropdown">
+                  <NavLink to={`/category/${cat.name}`} className={({ isActive }) => (isActive ? "active-link" : "")}>
+                    {cat.name}
+                  </NavLink>
+
+                  {cat.subCategories.length > 0 && (
+                    <ul className="sub-dropdown">
+                      {cat.subCategories.map((sub) => (
+                        <li key={sub._id}>
+                          <NavLink
+                            to={`/category/${cat.name}/${sub.name}`}
+                            className={({ isActive }) => (isActive ? "active-link" : "")}
+                          >
+                            {sub.name}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
             </ul>
           </li>
 
@@ -84,13 +97,11 @@ const Header = () => {
               New Arrival
             </NavLink>
           </li>
-
           <li>
             <NavLink to="/product" className={({ isActive }) => (isActive ? "active-link" : "")}>
               Shop
             </NavLink>
           </li>
-
           <li>
             <NavLink to="/Contactus" className={({ isActive }) => (isActive ? "active-link" : "")}>
               Contact
@@ -98,30 +109,25 @@ const Header = () => {
           </li>
         </ul>
 
-        {/* Search + Icons */}
         <div className="nav-actions">
-          <div className="search-wrapper">
-            <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="What are you looking for?"
-                className="search-input"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="search-btn">
-                <i className="fa-solid fa-magnifying-glass search-icon"></i>
-              </button>
-            </form>
-          </div>
+          <form onSubmit={handleSearch} className="search-form">
+            <input
+              type="text"
+              placeholder="What are you looking for?"
+              className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" className="search-btn">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
 
-          {/* Cart */}
           <NavLink to="/cart" className="cart-icon">
             <i className="fas fa-shopping-cart"></i>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </NavLink>
 
-          {/* User Icon */}
           {isLoggedIn ? (
             <Link to="/User" className="fas fa-user"></Link>
           ) : (

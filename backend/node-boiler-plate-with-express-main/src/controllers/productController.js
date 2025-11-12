@@ -1,8 +1,7 @@
-//productController
-
+// productController.js
 const Product = require("../models/productModel");
 
-// Get all products
+// ✅ Get all products
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -12,7 +11,7 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-// Get product by ID
+// ✅ Get product by ID
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -23,18 +22,30 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// Add new product
+// ✅ Add new product
 exports.addProduct = async (req, res) => {
   try {
-    const { name, price, description, category, subCategory } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
-
-    const newProduct = new Product({
+    const {
       name,
       price,
       description,
-      subCategory,
       category,
+      subCategory,
+      size,       
+    
+    } = req.body;
+
+    const image = req.file ? `/uploads/${req.file.filename}` : "";
+
+    const newProduct = new Product({
+      
+      name,
+      price,
+      description,
+      category,
+      subCategory,
+      size,       
+   
       image,
     });
 
@@ -45,15 +56,38 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// Update product
+//  Update product
 exports.updateProduct = async (req, res) => {
   try {
-    const { name, price, description, category, subCategory} = req.body;
-    const updatedData = { name, price, description, category,subCategory };
+    const {
+      name,
+      price,
+      description,
+      category,
+      subCategory,
+      size,       
+ 
+    } = req.body;
 
-    if (req.file) updatedData.image = `/uploads/${req.file.filename}`;
+    const updatedData = {
+      name,
+      price,
+      description,
+      category,
+      subCategory,
+      size,     
+   
+    };
 
-    const updated = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+    if (req.file) {
+      updatedData.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      updatedData,
+      { new: true }
+    );
     if (!updated) return res.status(404).json({ message: "Product not found" });
 
     res.json(updated);
@@ -62,7 +96,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// Delete product
+// ✅ Delete product
 exports.deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
@@ -74,14 +108,29 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-// Get New Arrivals (latest 5 products)
+// ✅ Get New Arrivals (latest 4 products)
 exports.getNewArrivals = async (req, res) => {
   try {
     const newProducts = await Product.find()
-      .sort({ createdAt: -1 }) // newest first
+      .sort({ createdAt: -1 })
       .limit(4);
     res.json(newProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+//category controller
+// Get products by category
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const categoryName = req.params.categoryName;
+    const products = await Product.find({ category: categoryName });
+    if (products.length === 0) {
+      return res.status(404).json({ message: "No products found for this category" });
+    }
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+

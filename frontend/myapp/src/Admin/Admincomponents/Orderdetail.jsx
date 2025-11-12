@@ -3,14 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./orderdetail.css";
 
 export default function OrderDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); // correct param name
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/orders/${id}`);
+        const res = await fetch(`http://localhost:8000/orders/${id}`); // ✅ use id
         if (!res.ok) throw new Error("Order not found");
         const data = await res.json();
         setOrder(data);
@@ -20,14 +20,14 @@ export default function OrderDetail() {
     };
 
     fetchOrder();
-  }, [id]);
+  }, [id]); // ✅ correct dependency
 
   if (!order) return <h2>Loading...</h2>;
 
   return (
     <div className="orderdetail-container">
       <h2>
-        Order Details - <span>{order._id.slice(-6)}</span>
+        Order Details - <span>{order._id?.slice(-6)}</span>
       </h2>
 
       <p><strong>Customer:</strong> {order.customer}</p>
@@ -54,24 +54,27 @@ export default function OrderDetail() {
                 <td>
                   <img
                     src={
-                      product.image.startsWith("http")
+                      product.image?.startsWith("http")
                         ? product.image
-                        : `http://localhost:8000${product.image}`
+                        : `http://localhost:8000${product?.product?.image || ""}`
                     }
                     alt={product.name}
                     width={60}
                   />
                 </td>
-                <td>{product.name}</td>
-                <td>{product.size}</td>
-                <td>{product.qty}</td>
-                <td>Rs {product.price * product.qty}</td>
+                <td>{product.product.name}</td>
+                <td>{product.size || "-"}</td>
+                <td>{product.qty || 1}</td>
+                <td>Rs {product.product.price * (product?.qty || 1)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-<button onClick={() => navigate(-1)} className="back-btn"> ← Back to Orders </button>
+
+      <button onClick={() => navigate(-1)} className="back-btn">
+        ← Back to Orders
+      </button>
     </div>
   );
 }

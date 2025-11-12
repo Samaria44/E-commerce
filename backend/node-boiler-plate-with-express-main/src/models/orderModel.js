@@ -9,11 +9,14 @@ const orderSchema = new mongoose.Schema(
     address: { type: String },
     paymentMethod: { type: String },
     products: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "product", // 👈 must match model name in productModel.js
-      },
-    ],
+  {
+    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    qty: Number,
+    _id: false, 
+    size:String,
+  },
+],
+
     totalAmount: { type: Number, required: true },
     status: { type: String, default: "Pending" },
     date: { type: String },

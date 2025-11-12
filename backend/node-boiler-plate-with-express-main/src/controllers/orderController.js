@@ -1,12 +1,17 @@
+//orderController
+
+// orderController.js
 const Order = require("../models/orderModel");
+const Product = require("../models/productModel"); // <-- import Product here
 
-
-
+// your existing code
 
 // Get all orders
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("products");
+    const orders = await Order.find().populate(
+      "products.product"
+    );
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -16,7 +21,9 @@ exports.getAllOrders = async (req, res) => {
 // Get order by ID
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate("products"); // 👈 populate here
+    const order = await Order.findById(req.params.id).populate(
+      "products.product"
+    );
     if (!order) return res.status(404).json({ message: "Order not found" });
     res.json(order);
   } catch (err) {
@@ -28,19 +35,64 @@ exports.getOrderById = async (req, res) => {
 // Add new order
 exports.addOrder = async (req, res) => {
   try {
-    console.log(" New order received:", req.body);
+    const {
+      customer,
+      email,
+      phone,
+      address,
+      paymentMethod,
+      products,
+      totalAmount,
+      date,
+    } = req.body;
 
-    const newOrder = new Order(req.body);
+    if (!products || products.length === 0) {
+      return res.status(400).json({ message: "No products in the order" });
+    }
+
+    // Format products to include only necessary fields
+    const formattedProducts = await Promise.all(
+      products.map(async (item) => {
+        const product = await Product.findById(item.productId); // frontend sends productId
+        if (!product) throw new Error(`Product not found: ${item.productId}`);
+
+        return {
+          product: product._id, // store only reference
+          qty: item.qty,
+          size: item.size || "-",
+        };
+      })
+    );
+
+    const newOrder = new Order({
+      customer,
+      email,
+      phone,
+      address,
+      paymentMethod,
+      products: formattedProducts,
+      totalAmount,
+      date,
+    });
+
     const savedOrder = await newOrder.save();
 
-    res
-      .status(201)
-      .json({ message: "Order placed successfully", order: savedOrder });
+    // Populate product info (select only required fields)
+    const populatedOrder = await savedOrder.populate(
+      "products.product",
+      "name price image category subCategory size"
+    );
+
+    res.status(201).json({
+      message: "Order placed successfully",
+      order: populatedOrder,
+    });
   } catch (err) {
-    console.error(" Order Save Error:", err);
+    console.error("❌ Order Save Error:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Update order (status change)
 exports.updateOrder = async (req, res) => {

@@ -3,34 +3,62 @@ import axios from "axios";
 import "./product.css";
 import { FiEdit2, FiTrash2, FiX, FiImage } from "react-icons/fi";
 
+const BACKEND_ORIGIN = "http://localhost:8000";
+
 export default function ProductUpload() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const [showForm, setShowForm] = useState(false);
   const [editingProductId, setEditingProductId] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
 
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     category: "",
-    subCategory: "", // ✅ Added subCategory
+    subCategory: "",
+    size: "",
     image: null,
   });
 
   // Fetch products
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/products");
+      const res = await axios.get(`${BACKEND_ORIGIN}/products`);
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
+  // Fetch categories
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_ORIGIN}/categories`);
+      setCategories(res.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
+
+  // Update subcategories when category changes
+  useEffect(() => {
+    const selectedCat = categories.find(
+      (cat) => cat.name === formData.category
+    );
+    setSubCategories(selectedCat?.subCategories || []);
+
+    // Reset subCategory whenever category changes
+    setFormData((prev) => ({ ...prev, subCategory: "" }));
+  }, [formData.category, categories]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -52,23 +80,20 @@ export default function ProductUpload() {
     }
 
     const uploadData = new FormData();
-    uploadData.append("name", formData.name);
-    uploadData.append("price", Number(formData.price));
-    uploadData.append("description", formData.description);
-    uploadData.append("category", formData.category);
-    uploadData.append("subCategory", formData.subCategory); // ✅ Added subCategory
-    if (formData.image) uploadData.append("image", formData.image);
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) uploadData.append(key, value);
+    });
 
     try {
       if (editingProductId) {
         await axios.patch(
-          `http://localhost:8000/products/${editingProductId}`,
+          `${BACKEND_ORIGIN}/products/${editingProductId}`,
           uploadData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
         alert("Product updated successfully!");
       } else {
-        await axios.post("http://localhost:8000/products", uploadData, {
+        await axios.post(`${BACKEND_ORIGIN}/products`, uploadData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         alert("Product uploaded successfully!");
@@ -91,8 +116,10 @@ export default function ProductUpload() {
 
   // Delete product
   const handleDelete = async (_id) => {
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
     try {
-      await axios.delete(`http://localhost:8000/products/${_id}`);
+      await axios.delete(`${BACKEND_ORIGIN}/products/${_id}`);
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -107,10 +134,11 @@ export default function ProductUpload() {
       price: p.price || "",
       description: p.description || "",
       category: p.category || "",
-      subCategory: p.subCategory || "", // ✅ Load subCategory
+      subCategory: p.subCategory || "",
+      size: p.size || "",
       image: null,
     });
-    setPreview(p.image ? `http://localhost:8000${p.image}` : null);
+    setPreview(p.image ? `${BACKEND_ORIGIN}${p.image}` : null);
     setEditingProductId(p._id);
     setShowForm(true);
   };
@@ -123,7 +151,8 @@ export default function ProductUpload() {
       price: "",
       description: "",
       category: "",
-      subCategory: "", // ✅ Reset subCategory
+      subCategory: "",
+      size: "",
       image: null,
     });
     setPreview(null);
@@ -143,7 +172,8 @@ export default function ProductUpload() {
             <th>Image</th>
             <th>Name</th>
             <th>Category</th>
-            <th>Subcategory</th> 
+            <th>Subcategory</th>
+            <th>Size</th>
             <th>Price</th>
             <th>Description</th>
             <th>Action</th>
@@ -155,7 +185,7 @@ export default function ProductUpload() {
               <td>
                 {p.image ? (
                   <img
-                    src={`http://localhost:8000${p.image}`}
+                    src={`${BACKEND_ORIGIN}${p.image}`}
                     alt={p.name}
                     width={50}
                   />
@@ -165,7 +195,8 @@ export default function ProductUpload() {
               </td>
               <td>{p.name}</td>
               <td>{p.category}</td>
-              <td>{p.subCategory}</td> 
+              <td>{p.subCategory}</td>
+              <td>{p.size}</td>
               <td>{p.price}</td>
               <td>{p.description}</td>
               <td className="actions">
@@ -193,16 +224,24 @@ export default function ProductUpload() {
                 required
                 onChange={handleChange}
               />
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                placeholder="Category"
-                required
-                onChange={handleChange}
-              />
 
-              {/* ✅ Subcategory select */}
+              {/* Category Dropdown */}
+           <select
+  name="category"
+  value={formData.category}
+  onChange={handleChange}
+  required
+>
+  <option value="">Select Category</option>
+  {categories.map((cat) => (
+    <option key={cat._id} value={cat.name}>
+      {cat.name}
+    </option>
+  ))}
+</select>
+
+
+              {/* Subcategory Dropdown */}
               <select
                 name="subCategory"
                 value={formData.subCategory}
@@ -210,9 +249,25 @@ export default function ProductUpload() {
                 required
               >
                 <option value="">Select Subcategory</option>
-                <option value="Office">Office</option>
-                <option value="Summer">Summer</option>
+                {categories
+                  .find((cat) => cat.name === formData.category)
+                  ?.subCategories.map((sub) => (
+                    <option key={sub._id} value={sub.name}>
+                      {sub.name}
+                    </option>
+                  ))}
               </select>
+
+              {/* Size Input */}
+              <input
+                type="text"
+                name="size"
+                value={formData.size}
+                placeholder="Size (e.g. S, M, L, XL)"
+                required
+                onChange={handleChange}
+                className="styled-input"
+              />
 
               <input
                 type="number"
