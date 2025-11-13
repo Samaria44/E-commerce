@@ -5,6 +5,7 @@ const path = require("path");
 const productRoutes = require("./routes/product.routes");
 const orderRoutes = require("./routes/order.routes");
 const categoryRoutes = require("./routes/category.routes");
+const contactRoutes = require("./routes/contact.routes");
 const app = express();
 
 app.use(cors());
@@ -18,6 +19,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use('/categories', categoryRoutes);
+app.use("/contact", contactRoutes);
 
 
 

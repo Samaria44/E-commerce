@@ -109,31 +109,30 @@ const Header = () => {
           </li>
         </ul>
 
-        <div className="nav-actions">
-          <form onSubmit={handleSearch} className="search-form">
-            <input
-              type="text"
-              placeholder="What are you looking for?"
-              className="search-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit" className="search-btn">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </form>
+       <div className="nav-actions">
+  <form onSubmit={handleSearch} className="search-wrapper">
+    <input
+      type="text"
+      placeholder="What are you looking for?"
+      className="search-input"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+    />
+    <i className="fa-solid fa-magnifying-glass search-icon"></i>
+  </form>
 
-          <NavLink to="/cart" className="cart-icon">
-            <i className="fas fa-shopping-cart"></i>
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-          </NavLink>
+  <NavLink to="/cart" className="cart-icon">
+    <i className="fas fa-shopping-cart"></i>
+    {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+  </NavLink>
 
-          {isLoggedIn ? (
-            <Link to="/User" className="fas fa-user"></Link>
-          ) : (
-            <Link to="/Login" className="fas fa-user"></Link>
-          )}
-        </div>
+  {isLoggedIn ? (
+    <Link to="/User" className="fas fa-user"></Link>
+  ) : (
+    <Link to="/Login" className="fas fa-user"></Link>
+  )}
+</div>
+
       </nav>
     </div>
   );

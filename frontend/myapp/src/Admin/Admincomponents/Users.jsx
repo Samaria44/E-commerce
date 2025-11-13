@@ -1,163 +1,92 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FiTrash2 } from "react-icons/fi";
 import "./user.css";
-import { FiEdit2, FiTrash2, FiX } from "react-icons/fi";
 
-export default function Users() {
-  const [users, setUsers] = useState(() => {
-    const userData = localStorage.getItem("users");
-    if (!userData) return [];
-    return JSON.parse(userData);
-  });
-  const [showForm, setShowForm] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
+const BACKEND_URL = "http://localhost:8000/contact"; // your backend API
 
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    address: "",
-    email: "",
-  });
-console.log("users", users);
- localStorage.setItem("users", JSON.stringify(users));
-  // handle input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+export default function AdminContact() {
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // add or edit user
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.name || !formData.contact || !formData.address || !formData.email) {
-      alert("Please fill in all fields!");
-      return;
-    }
-
-    if (isEditing) {
-      const updated = [...users];
-      updated[editIndex] = formData;
-      setUsers(updated);
-      setIsEditing(false);
-      setEditIndex(null);
-    } else {
-      setUsers([...users, formData]);
-    }
-
-    setFormData({ name: "", contact: "", address: "", email: "" });
-    setShowForm(false);
-  };
-
-  // edit user
-  const handleEdit = (index) => {
-    setIsEditing(true);
-    setEditIndex(index);
-    setFormData(users[index]);
-    setShowForm(true);
-  };
-
-  // delete user
-  const handleDelete = (index) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      const updated = users.filter((_, i) => i !== index);
-      setUsers(updated);
+  // Fetch all contact messages
+  const fetchContacts = async () => {
+    try {
+      const res = await axios.get(BACKEND_URL); // GET all messages
+      setContacts(res.data); // assuming backend returns array
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch contacts.");
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  // Delete contact message
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this message?")) {
+      try {
+        await axios.delete(`${BACKEND_URL}/${id}`);
+        setContacts(contacts.filter((contact) => contact._id !== id));
+      } catch (err) {
+        console.error(err);
+        alert("Failed to delete message.");
+      }
+    }
+  };
+
+  if (loading) return <p>Loading contacts...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="user-table-container">
-      <div className="user-header">
-        <h2 className="user-title">
-          Users <span className="count">({users.length})</span>
-        </h2>
-        <button className="add-btn" onClick={() => setShowForm(true)}>
-          + Add User
-        </button>
-      </div>
+      <h2 className="user-title">
+        Contact Messages <span className="count">({contacts.length})</span>
+      </h2>
 
       <table className="user-table">
         <thead>
           <tr>
-            <th>Customer Name</th>
-            <th>Contact</th>
-            <th>Address</th>
+            <th>Name</th>
             <th>Email</th>
+            <th>Phone</th>
+            <th>Subject</th>
+            <th>Message</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {users.length === 0 ? (
+          {contacts.length === 0 ? (
             <tr>
-              <td colSpan="5" style={{ textAlign: "center", color: "#888" }}>
-                No users added yet
+              <td colSpan="6" style={{ textAlign: "center", color: "#888" }}>
+                No messages found
               </td>
             </tr>
           ) : (
-            users.map((user, index) => (
-              <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.contact}</td>
-                <td>{user.address}</td>
-                <td>{user.email}</td>
+            contacts.map((contact) => (
+              <tr key={contact._id}>
+                <td>{contact.name}</td>
+                <td>{contact.email}</td>
+                <td>{contact.phone}</td>
+                <td>{contact.subject}</td>
+                <td>{contact.message}</td>
                 <td>
-                  <FiEdit2 className="edit" onClick={() => handleEdit(index)} />
-                  <FiTrash2 className="delete" onClick={() => handleDelete(index)} />
+                  <FiTrash2
+                    className="delete"
+                    onClick={() => handleDelete(contact._id)}
+                    style={{ cursor: "pointer" }}
+                  />
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-
-      {showForm && (
-        <div className="popup-overlay">
-          <div className="popup-form">
-            <div className="popup-header">
-              <h3>{isEditing ? "Edit User" : "Add New User"}</h3>
-              <FiX className="close-icon" onClick={() => setShowForm(false)} />
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Customer Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="contact"
-                placeholder="Contact"
-                value={formData.contact}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <button type="submit" className="save-btn">
-                {isEditing ? "Update User" : "Save User"}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
