@@ -1,44 +1,43 @@
 /* ===================================================
-   FEATURES SECTION — Redesigned
+   FEATURES SECTION
    =================================================== */
 
 .custom {
-  padding: 60px 0;
-  text-align: left;
-  max-width: 1200px;
+  padding: 72px 5%;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .custom h1 {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 800;
   color: #111827;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   letter-spacing: -0.5px;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .custom > p {
-  max-width: 560px;
-  font-size: 16px;
-  line-height: 1.7;
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.75;
   color: #6b7280;
   margin-bottom: 48px;
 }
 
-/* Feature columns */
+/* Feature grid */
 .cus-col-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .cus-col {
   background: #fff;
   border: 1px solid #f3f4f6;
   border-radius: 16px;
-  padding: 28px 24px;
-  transition: all 0.3s ease;
+  padding: 28px 22px;
+  transition: all 0.25s ease;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
@@ -49,27 +48,27 @@
 }
 
 .cus-col .icon {
-  font-size: 28px;
-  margin-bottom: 16px;
-  width: 52px;
-  height: 52px;
-  background: #f9fafb;
+  width: 48px;
+  height: 48px;
+  background: #fdf2f8;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #e91e63;
+  margin-bottom: 18px;
+  font-size: 22px;
 }
 
 .cus-col h3 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .cus-col p {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
   color: #6b7280;
   margin: 0;
@@ -89,15 +88,20 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .cus-col-container { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 768px) {
+  .custom { padding: 56px 5%; }
   .custom h1 { font-size: 26px; }
-  .custom > p { font-size: 15px; }
   .cus-col-container { gap: 16px; }
 }
 
 @media (max-width: 480px) {
-  .custom { padding: 40px 0; }
+  .custom { padding: 40px 4%; }
   .custom h1 { font-size: 22px; }
-  .cus-col-container { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cus-col-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .cus-col { padding: 20px 16px; }
+  .cus-col h3 { font-size: 14px; }
 }

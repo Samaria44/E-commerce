@@ -1,89 +1,85 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Layout & Pages
+// Layouts
 import AppLayout from "./components/AppLayout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./pages/Home";
+import AdminLayout from "./Admin/Admincomponents/Adminlayout";
+import CartProvider from "./components/context/CartContext";
 
+// Auth
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login";
+import AdminLogin from "./Admin/Admincomponents/adminlogin";
+
+// Frontend pages
+import Home from "./pages/Home";
+import NewArrivals from "./pages/NewArrivals";
 import Mostwanted from "./pages/MostWanted";
 import User from "./pages/User";
-import Login from "./components/Login";
 import About from "./pages/About";
-// import Men from "./components/men";
-// import Women from "./components/women";
 import Contact from "./pages/Contactus";
-import ProductDetails from "./components/ProductDetails";
-import CartProvider from "./components/context/CartContext";
 import Product from "./components/products";
+import ProductDetails from "./components/ProductDetails";
 import Cart from "./pages/Cart";
 import Allcollection from "./pages/allcollection";
 import Checkout from "./pages/Checkout";
 import SearchResults from "./components/SearchResults";
-// import Office from "./components/office";
-// import Summer from "./components/summer";
-import Admin from "./Admin/Adminpages/Dashboard";
-import AdminLogin from "./Admin/Admincomponents/adminlogin";
+import CategoryProducts from "./components/category";
+
+// Admin pages
+import AdminDashboard from "./Admin/Adminpages/Dashboard";
 import ProductUpload from "./Admin/Admincomponents/ProductUpload";
-// import AdminLayout from "./Admin/Admincomponents/Adminlayout";
+import CategoryPage from "./Admin/Admincomponents/products_Category";
 import Orders from "./Admin/Admincomponents/Order";
 import Users from "./Admin/Admincomponents/Users";
 import OrderDetail from "./Admin/Admincomponents/Orderdetail";
-import AdminLayout from "./Admin/Admincomponents/Adminlayout";
-import NewArrivals from "./pages/NewArrivals";
-import CategoryPage from "./Admin/Admincomponents/products_Category";
-import CategoryProducts from "./components/category";
-
 
 function App() {
   const router = createBrowserRouter([
+    // ── Frontend routes (with Header + Footer) ──
     {
       path: "/",
       element: <AppLayout />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "/products/new", element: <NewArrivals/> },
-        { path: "/MostWanted", element: <Mostwanted /> },
-
+        { index: true, element: <Home /> },
+        { path: "products/new", element: <NewArrivals /> },
+        { path: "MostWanted", element: <Mostwanted /> },
+        { path: "Login", element: <Login /> },
+        { path: "About", element: <About /> },
+        { path: "Contactus", element: <Contact /> },
+        { path: "product", element: <Product /> },
+        { path: "products/:productid", element: <ProductDetails /> },
+        { path: "cart", element: <Cart /> },
+        { path: "Allcollection", element: <Allcollection /> },
+        { path: "Checkout", element: <Checkout /> },
+        { path: "search", element: <SearchResults /> },
+        { path: "category/:categoryName", element: <CategoryProducts /> },
+        { path: "category/:categoryName/sub/:subName", element: <CategoryProducts /> },
         {
-          path: "/User",
+          path: "User",
           element: (
             <ProtectedRoute>
               <User />
             </ProtectedRoute>
           ),
         },
-        { path: "/Login", element: <Login /> },
-        { path: "/About", element: <About /> },
-        // { path: "category/Men", element: <Men /> },
-        // { path: "/category/Women", element: <Women /> },
-        { path: "/Contactus", element: <Contact /> },
-        { path: "/product", element: <Product /> },
-        { path: "/products/:productid", element: <ProductDetails /> },
-        { path: "/cart", element: <Cart /> },
-        { path: "/Allcollection", element: <Allcollection /> },
-        { path: "Checkout", element: <Checkout /> },
-        { path: "/search", element: <SearchResults /> },
-      {path:"/category/:categoryName" ,element:<CategoryProducts/>},
-      {path:"/category/:categoryName/sub/:subName",element:<CategoryProducts/>}
-     
-      
       ],
     },
+
+    // ── Admin login (standalone, no sidebar) ──
     { path: "/dashboard/login", element: <AdminLogin /> },
-        { path: "/dashboard/", element: <Admin /> },
+
+    // ── Admin routes (with sidebar layout) ──
     {
-      path: "/",
+      path: "/dashboard",
       element: <AdminLayout />,
       children: [
-        
-        { path: "", element: <Admin /> },
-        { path: "/dashboard/products", element: <ProductUpload /> },
-        {path:"/dashboard/categories", element:<CategoryPage/>},
-        { path: "/dashboard/orders", element: <Orders /> },
-        { path: "/dashboard/users", element: <Users /> },
-        { path: "/dashboard/orderdetail/:id", element: <OrderDetail /> },
-      
+        { index: true, element: <AdminDashboard /> },
+        { path: "products", element: <ProductUpload /> },
+        { path: "categories", element: <CategoryPage /> },
+        { path: "orders", element: <Orders /> },
+        { path: "users", element: <Users /> },
+        { path: "orderdetail/:id", element: <OrderDetail /> },
       ],
     },
   ]);

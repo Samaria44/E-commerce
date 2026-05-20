@@ -234,12 +234,42 @@
   color: #9ca3af;
 }
 
-.search-icon {
+/* Search submit button */
+.search-submit-btn {
   position: absolute;
-  right: 14px;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
   color: #9ca3af;
-  font-size: 14px;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.search-submit-btn:hover {
+  color: #e91e63;
+}
+
+/* User icon link */
+.user-icon {
+  font-size: 20px;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.user-icon:hover {
+  background: #f9fafb;
+  color: var(--accent);
 }
 
 /* Cart icon */

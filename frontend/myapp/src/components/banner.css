@@ -1,23 +1,27 @@
 /* ===================================================
-   BANNER & SUBSCRIBE SECTION — Redesigned
+   BANNER & SUBSCRIBE SECTION
    =================================================== */
 
 .last-section {
-  margin-top: 80px;
+  padding: 0 5%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: 80px;
 }
 
-/* ===== PROMO BANNER ===== */
+/* Promo banner */
 .banner {
   display: flex;
   align-items: stretch;
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  margin-top: 60px;
 }
 
 .banner-text {
   flex: 1;
-  padding: 64px 56px;
+  padding: 60px 52px;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #fff;
   display: flex;
@@ -26,9 +30,9 @@
 }
 
 .banner-text h2 {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 800;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   line-height: 1.25;
   letter-spacing: -0.5px;
 }
@@ -38,25 +42,25 @@
 }
 
 .banner-text p {
-  font-size: 15px;
+  font-size: 14px;
   color: #94a3b8;
-  margin-bottom: 32px;
-  line-height: 1.7;
-  max-width: 420px;
+  margin-bottom: 28px;
+  line-height: 1.75;
+  max-width: 380px;
 }
 
 .banner-text button {
   background: #e91e63;
   color: #fff;
   border: none;
-  padding: 14px 32px;
-  border-radius: 12px;
+  padding: 13px 28px;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
   width: fit-content;
-  letter-spacing: 0.2px;
+  font-family: inherit;
 }
 
 .banner-text button:hover {
@@ -67,7 +71,7 @@
 
 .banner-image {
   flex: 1;
-  max-width: 50%;
+  max-width: 48%;
   overflow: hidden;
 }
 
@@ -83,48 +87,48 @@
   transform: scale(1.03);
 }
 
-/* ===== SUBSCRIBE SECTION ===== */
+/* Subscribe section */
 .subscribe {
   text-align: center;
-  background: linear-gradient(135deg, #fdf2f8 0%, #f9fafb 100%);
-  padding: 72px 40px;
-  border-radius: 24px;
-  margin-top: 60px;
-  border: 1px solid #fce7f3;
+  background: #f9fafb;
+  padding: 64px 40px;
+  border-radius: 20px;
+  margin-top: 48px;
+  border: 1px solid #f3f4f6;
 }
 
 .subscribe h3 {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   letter-spacing: -0.5px;
 }
 
 .subscribe p {
-  font-size: 15px;
+  font-size: 14px;
   color: #6b7280;
-  margin-bottom: 32px;
-  max-width: 520px;
+  margin-bottom: 28px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .subscribe form {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .subscribe input {
-  padding: 13px 20px;
-  width: 300px;
+  padding: 12px 18px;
+  width: 280px;
   border: 1.5px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 10px;
   outline: none;
-  font-size: 15px;
+  font-size: 14px;
   background: #fff;
   color: #111827;
   transition: all 0.2s;
@@ -142,11 +146,11 @@
   background: #111827;
   color: #fff;
   border: none;
-  padding: 13px 28px;
-  border-radius: 12px;
+  padding: 12px 24px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   transition: all 0.2s;
   font-family: inherit;
 }
@@ -154,7 +158,7 @@
 .subscribe button:hover {
   background: #1f2937;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(17,24,39,0.2);
+  box-shadow: 0 4px 14px rgba(17,24,39,0.2);
 }
 
 /* Animations */
@@ -170,29 +174,30 @@
   transition: all 0.7s ease;
 }
 
-/* ===== RESPONSIVE ===== */
+/* Responsive */
 @media (max-width: 992px) {
-  .banner-text { padding: 48px 40px; }
-  .banner-text h2 { font-size: 28px; }
+  .banner-text { padding: 48px 36px; }
+  .banner-text h2 { font-size: 26px; }
 }
 
 @media (max-width: 768px) {
+  .last-section { padding: 0 4%; padding-bottom: 60px; }
   .banner { flex-direction: column-reverse; }
-  .banner-image { max-width: 100%; height: 280px; }
-  .banner-text { padding: 40px 28px; text-align: center; }
+  .banner-image { max-width: 100%; height: 260px; }
+  .banner-text { padding: 36px 28px; text-align: center; }
   .banner-text p { max-width: 100%; }
   .banner-text button { margin: 0 auto; }
   .subscribe { padding: 48px 24px; }
-  .subscribe h3 { font-size: 22px; }
-  .subscribe input { width: 100%; max-width: 320px; }
+  .subscribe h3 { font-size: 20px; }
+  .subscribe input { width: 100%; max-width: 300px; }
 }
 
 @media (max-width: 480px) {
-  .banner { border-radius: 16px; }
-  .banner-text { padding: 32px 20px; }
+  .banner { border-radius: 14px; }
+  .banner-text { padding: 28px 20px; }
   .banner-text h2 { font-size: 22px; }
-  .banner-image { height: 220px; }
-  .subscribe { padding: 36px 16px; border-radius: 16px; }
+  .banner-image { height: 200px; }
+  .subscribe { padding: 36px 16px; border-radius: 14px; }
   .subscribe form { flex-direction: column; align-items: center; }
-  .subscribe input, .subscribe button { width: 100%; max-width: 320px; }
+  .subscribe input, .subscribe button { width: 100%; max-width: 300px; }
 }

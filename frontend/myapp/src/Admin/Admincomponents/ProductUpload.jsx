@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./product.css";
-import { FiEdit2, FiTrash2, FiX, FiImage } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiX, FiImage, FiPlus } from "react-icons/fi";
 
 const BACKEND_ORIGIN = "http://localhost:8000";
 
 export default function ProductUpload() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-
   const [showForm, setShowForm] = useState(false);
   const [editingProductId, setEditingProductId] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -38,7 +37,7 @@ export default function ProductUpload() {
   const fetchCategories = async () => {
     try {
       const res = await axios.get(`${BACKEND_ORIGIN}/categories`);
-      setCategories(res.data);
+      setCategories(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -50,17 +49,15 @@ export default function ProductUpload() {
   }, []);
 
   // Update subcategories when category changes
+  // Fixed: backend uses cat.Category and cat.subcategories[].Name
   useEffect(() => {
     const selectedCat = categories.find(
-      (cat) => cat.name === formData.category
+      (cat) => cat.Category === formData.category
     );
-    setSubCategories(selectedCat?.subCategories || []);
-
-    // Reset subCategory whenever category changes
+    setSubCategories(selectedCat?.subcategories || []);
     setFormData((prev) => ({ ...prev, subCategory: "" }));
   }, [formData.category, categories]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files && files[0]) {
@@ -71,7 +68,6 @@ export default function ProductUpload() {
     }
   };
 
-  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.price) {
@@ -81,7 +77,7 @@ export default function ProductUpload() {
 
     const uploadData = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (value) uploadData.append(key, value);
+      if (value !== null && value !== "") uploadData.append(key, value);
     });
 
     try {
@@ -91,43 +87,29 @@ export default function ProductUpload() {
           uploadData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-        alert("Product updated successfully!");
       } else {
         await axios.post(`${BACKEND_ORIGIN}/products`, uploadData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("Product uploaded successfully!");
       }
-
       resetForm();
       fetchProducts();
     } catch (error) {
-      console.error(
-        "Error saving product:",
-        error.response?.data || error.message
-      );
-      alert(
-        `Error saving product: ${
-          error.response?.data?.message || error.message
-        }`
-      );
+      console.error("Error saving product:", error.response?.data || error.message);
+      alert(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
 
-  // Delete product
   const handleDelete = async (_id) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
-      return;
+    if (!window.confirm("Delete this product?")) return;
     try {
       await axios.delete(`${BACKEND_ORIGIN}/products/${_id}`);
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Error deleting product!");
     }
   };
 
-  // Edit product
   const handleEdit = (p) => {
     setFormData({
       name: p.name || "",
@@ -143,18 +125,9 @@ export default function ProductUpload() {
     setShowForm(true);
   };
 
-  // Reset form
   const resetForm = () => {
     setShowForm(false);
-    setFormData({
-      name: "",
-      price: "",
-      description: "",
-      category: "",
-      subCategory: "",
-      size: "",
-      image: null,
-    });
+    setFormData({ name: "", price: "", description: "", category: "", subCategory: "", size: "", image: null });
     setPreview(null);
     setEditingProductId(null);
   };
@@ -162,8 +135,11 @@ export default function ProductUpload() {
   return (
     <div className="products-page">
       <div className="products-header">
-        <h2>Products ({products.length})</h2>
-        <button onClick={() => setShowForm(true)}>+ Add Product</button>
+        <h2>Products <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 16 }}>({products.length})</span></h2>
+        <button onClick={() => setShowForm(true)}>
+          <FiPlus size={15} style={{ marginRight: 6 }} />
+          Add Product
+        </button>
       </div>
 
       <table>
@@ -176,120 +152,119 @@ export default function ProductUpload() {
             <th>Size</th>
             <th>Price</th>
             <th>Description</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((p) => (
-            <tr key={p._id}>
-              <td>
-                {p.image ? (
-                  <img
-                    src={`${BACKEND_ORIGIN}${p.image}`}
-                    alt={p.name}
-                    width={50}
-                  />
-                ) : (
-                  <FiImage />
-                )}
-              </td>
-              <td>{p.name}</td>
-              <td>{p.category}</td>
-              <td>{p.subCategory}</td>
-              <td>{p.size}</td>
-              <td>{p.price}</td>
-              <td>{p.description}</td>
-              <td className="actions">
-                <FiEdit2 onClick={() => handleEdit(p)} className="edit-icon" />
-                <FiTrash2
-                  onClick={() => handleDelete(p._id)}
-                  className="delete-icon"
-                />
+          {products.length === 0 ? (
+            <tr>
+              <td colSpan="8" style={{ textAlign: "center", padding: "40px", color: "#94a3b8" }}>
+                No products yet. Add your first one.
               </td>
             </tr>
-          ))}
+          ) : (
+            products.map((p) => (
+              <tr key={p._id}>
+                <td>
+                  {p.image ? (
+                    <img src={`${BACKEND_ORIGIN}${p.image}`} alt={p.name} />
+                  ) : (
+                    <FiImage size={24} color="#94a3b8" />
+                  )}
+                </td>
+                <td style={{ fontWeight: 600 }}>{p.name}</td>
+                <td>{p.category}</td>
+                <td>{p.subCategory || "-"}</td>
+                <td>{p.size || "-"}</td>
+                <td>Rs {p.price}</td>
+                <td style={{ maxWidth: 160, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {p.description || "-"}
+                </td>
+                <td className="actions">
+                  <FiEdit2 onClick={() => handleEdit(p)} className="edit-icon" title="Edit" />
+                  <FiTrash2 onClick={() => handleDelete(p._id)} className="delete-icon" title="Delete" />
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 
       {showForm && (
         <div className="popup-overlay">
           <div className="popup-form">
-            <FiX className="close-btn" onClick={resetForm} />
+            <button className="close-btn" onClick={resetForm}>
+              <FiX size={18} />
+            </button>
             <form onSubmit={handleSubmit}>
+              <h3>{editingProductId ? "Edit Product" : "Add New Product"}</h3>
+
+              <label>Product Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
-                placeholder="Product Name"
+                placeholder="e.g. Classic White Shirt"
                 required
                 onChange={handleChange}
               />
 
-              {/* Category Dropdown */}
-           <select
-  name="category"
-  value={formData.category}
-  onChange={handleChange}
-  required
->
-  <option value="">Select Category</option>
-  {categories.map((cat) => (
-    <option key={cat._id} value={cat.name}>
-      {cat.name}
-    </option>
-  ))}
-</select>
-
-
-              {/* Subcategory Dropdown */}
-              <select
-                name="subCategory"
-                value={formData.subCategory}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Subcategory</option>
-                {categories
-                  .find((cat) => cat.name === formData.category)
-                  ?.subCategories.map((sub) => (
-                    <option key={sub._id} value={sub.name}>
-                      {sub.name}
-                    </option>
-                  ))}
+              {/* Category — fixed: uses cat.Category */}
+              <label>Category</label>
+              <select name="category" value={formData.category} onChange={handleChange} required>
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat.Category}>
+                    {cat.Category}
+                  </option>
+                ))}
               </select>
 
-              {/* Size Input */}
+              {/* Subcategory — fixed: uses cat.subcategories[].Name */}
+              <label>Subcategory</label>
+              <select name="subCategory" value={formData.subCategory} onChange={handleChange}>
+                <option value="">Select Subcategory (optional)</option>
+                {subCategories.map((sub) => (
+                  <option key={sub._id} value={sub.Name}>
+                    {sub.Name}
+                  </option>
+                ))}
+              </select>
+
+              <label>Size</label>
               <input
                 type="text"
                 name="size"
                 value={formData.size}
-                placeholder="Size (e.g. S, M, L, XL)"
-                required
+                placeholder="e.g. S, M, L, XL"
                 onChange={handleChange}
                 className="styled-input"
               />
 
+              <label>Price (Rs)</label>
               <input
                 type="number"
                 name="price"
                 value={formData.price}
-                placeholder="Price"
+                placeholder="e.g. 1500"
                 required
                 onChange={handleChange}
               />
+
+              <label>Description</label>
               <textarea
                 name="description"
                 value={formData.description}
-                placeholder="Description"
-                onChange={handleChange}
-              ></textarea>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
+                placeholder="Product description..."
                 onChange={handleChange}
               />
-              {preview && <img src={preview} alt="Preview" width={80} />}
+
+              <label>Product Image</label>
+              <input type="file" name="image" accept="image/*" onChange={handleChange} />
+              {preview && (
+                <img src={preview} alt="Preview" style={{ width: 80, height: 80, objectFit: "cover" }} />
+              )}
+
               <button type="submit">
                 {editingProductId ? "Update Product" : "Save Product"}
               </button>

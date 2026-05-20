@@ -7,9 +7,10 @@ import {
   FiUsers,
   FiTrendingUp,
   FiLogOut,
+  FiArrowUp,
 } from "react-icons/fi";
 
-export default function Admin() {
+export default function AdminDashboard() {
   const navigate = useNavigate();
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
@@ -21,26 +22,27 @@ export default function Admin() {
     if (!token) navigate("/dashboard/login");
   }, [navigate]);
 
-  // Fetch counts
   useEffect(() => {
-    const loadCounts = async () => {
+    const load = async () => {
       try {
-        const [productRes, orderRes] = await Promise.all([
+        const [pRes, oRes] = await Promise.all([
           fetch("http://localhost:8000/products"),
           fetch("http://localhost:8000/orders"),
         ]);
-        const products = await productRes.json();
-        const orders = await orderRes.json();
-        setTotalProducts(products.length);
-        setTotalOrders(orders.length);
+        const products = await pRes.json();
+        const orders = await oRes.json();
+        setTotalProducts(Array.isArray(products) ? products.length : 0);
+        setTotalOrders(Array.isArray(orders) ? orders.length : 0);
         setPendingOrders(
-          orders.filter((o) => o.status === "Pending" || !o.status).length
+          Array.isArray(orders)
+            ? orders.filter((o) => !o.status || o.status === "Pending").length
+            : 0
         );
-      } catch (error) {
-        console.error("Error loading counts:", error);
+      } catch (err) {
+        console.error("Dashboard load error:", err);
       }
     };
-    loadCounts();
+    load();
   }, []);
 
   const handleLogout = () => {
@@ -65,14 +67,14 @@ export default function Admin() {
     },
     {
       label: "Registered Users",
-      value: "—",
+      value: "N/A",
       icon: <FiUsers size={22} />,
       className: "user-card",
       trend: "All time",
     },
     {
       label: "Revenue",
-      value: "—",
+      value: "N/A",
       icon: <FiTrendingUp size={22} />,
       className: "revenue-card",
       trend: "This month",
@@ -81,7 +83,7 @@ export default function Admin() {
 
   return (
     <>
-      {/* Fixed Header */}
+      {/* Fixed top header */}
       <header className="admin-header">
         <div className="admin-header-left">
           <h1 className="admin-title">Dashboard</h1>
@@ -96,14 +98,8 @@ export default function Admin() {
         </div>
       </header>
 
-      {/* Page Content */}
-      <div
-        style={{
-          marginTop: "68px",
-          padding: "32px",
-        }}
-      >
-        {/* Stats Grid */}
+      {/* Page body — pushed below fixed header */}
+      <div style={{ marginTop: "68px", padding: "32px" }}>
         <div
           style={{
             display: "grid",
@@ -116,7 +112,10 @@ export default function Admin() {
               <div className="card-icon">{stat.icon}</div>
               <h3>{stat.label}</h3>
               <p>{stat.value}</p>
-              <div className="card-trend">↑ {stat.trend}</div>
+              <div className="card-trend">
+                <FiArrowUp size={11} style={{ marginRight: 3, verticalAlign: "middle" }} />
+                {stat.trend}
+              </div>
             </div>
           ))}
         </div>

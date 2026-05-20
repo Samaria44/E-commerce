@@ -1,54 +1,53 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiChevronLeft, FiChevronRight, FiArrowRight } from "react-icons/fi";
 import "./products.css";
+
+const categories = [
+  {
+    title: "Men",
+    image: "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg",
+    route: "/category/Men",
+  },
+  {
+    title: "Women",
+    image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",
+    route: "/category/Women",
+  },
+  {
+    title: "Office Collection",
+    image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=600&q=80",
+    route: "/category/Office",
+  },
+  {
+    title: "Summer Collection",
+    image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+    route: "/category/Summer",
+  },
+];
 
 export default function CategoryCarousel() {
   const carouselRef = useRef(null);
   const navigate = useNavigate();
 
   const scroll = (direction) => {
-    const scrollAmount = 350;
-    if (direction === "left") {
-      carouselRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    } else {
-      carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
+    carouselRef.current?.scrollBy({
+      left: direction === "left" ? -350 : 350,
+      behavior: "smooth",
+    });
   };
-
-  // ✅ Your backend origin (for image correction or dynamic linking)
-  const BACKEND_ORIGIN = "http://localhost:8000";
-
-  // ✅ Define categories that match backend
-  const categories = [
-    {
-      title: "Men",
-      image: "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg",
-      route: "/category/Men",
-    },
-    {
-      title: "Women",
-      image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",
-      route: "/category/women",
-    },
-    {
-      title: "Office Collection",
-      image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=600&q=80",
-      route: "/category/Office",
-    },
-    {
-      title: "Summer Collection",
-      image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
-      route: "/category/Summer",
-    },
-  ];
 
   return (
     <div className="carousel-container">
       <div className="carousel-header">
         <h2>Popular Categories</h2>
         <div className="carousel-arrows">
-          <button onClick={() => scroll("left")}>❮</button>
-          <button onClick={() => scroll("right")}>❯</button>
+          <button onClick={() => scroll("left")} aria-label="Scroll left">
+            <FiChevronLeft size={18} />
+          </button>
+          <button onClick={() => scroll("right")} aria-label="Scroll right">
+            <FiChevronRight size={18} />
+          </button>
         </div>
       </div>
 
@@ -62,7 +61,7 @@ export default function CategoryCarousel() {
             <img src={cat.image} alt={cat.title} />
             <div className="overlay">
               <span>{cat.title}</span>
-              <span className="arrow">→</span>
+              <FiArrowRight size={16} />
             </div>
           </div>
         ))}

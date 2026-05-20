@@ -3,18 +3,24 @@
    =================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: 'Inter', 'Poppins', Arial, sans-serif;
-  background-color: #fff;
+  font-family: 'Inter', sans-serif;
+  background: #fff;
   color: #111827;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== SECTION WRAPPER ===== */
+.section-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 /* ===== FOOTER ===== */
@@ -22,65 +28,88 @@ body {
   width: 100%;
   background: #0f172a;
   color: #e2e8f0;
-  padding: 72px 60px 40px;
+  padding: 64px 60px 36px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto 48px;
 }
 
 .col {
   flex: 1;
-  min-width: 180px;
+  min-width: 160px;
 }
 
 .logo-footer {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: #fff;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .footer-tagline {
-  font-size: 14px;
-  color: #94a3b8;
-  line-height: 1.7;
-  margin-bottom: 20px;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.8;
+  max-width: 240px;
 }
 
 .col h3 {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
-  color: #fff;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 16px;
+  letter-spacing: 1.2px;
+  margin-bottom: 18px;
 }
 
 .col ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .col li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .col li a {
   text-decoration: none;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 14px;
   transition: color 0.2s;
+  line-height: 1.5;
 }
 
 .col li a:hover {
   color: #e91e63;
+}
+
+/* Footer contact items */
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 12px;
+  list-style: none;
+  line-height: 1.5;
+}
+
+.footer-contact-icon {
+  flex-shrink: 0;
+  color: #6366f1;
+  margin-top: 2px;
 }
 
 .footer-bottom {
@@ -92,26 +121,29 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .footer-bottom p {
-  font-size: 13px;
-  color: #64748b;
+  font-size: 12px;
+  color: #475569;
 }
 
-/* ===== BUTTON COMPONENT ===== */
+/* ===== SHARED BUTTON STYLES ===== */
 .btn-primary {
   background: #111827;
   color: #fff;
   border: none;
-  padding: 11px 24px;
+  padding: 12px 28px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-primary:hover {
@@ -124,13 +156,16 @@ body {
   background: #e91e63;
   color: #fff;
   border: none;
-  padding: 11px 24px;
+  padding: 12px 28px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-accent:hover {
@@ -140,8 +175,20 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .footer { padding: 56px 40px 32px; }
+}
+
 @media (max-width: 768px) {
-  .footer { padding: 48px 24px 32px; }
-  .row { gap: 24px; }
+  .footer { padding: 48px 24px 28px; }
+  .row { gap: 28px; }
   .footer-bottom { flex-direction: column; text-align: center; }
+  .col { min-width: 140px; }
+}
+
+@media (max-width: 480px) {
+  .footer { padding: 40px 20px 24px; }
+  .row { gap: 24px; }
+  .col { min-width: 100%; }
+  .footer-tagline { max-width: 100%; }
 }

@@ -1,7 +1,7 @@
 // controllers/categoryController.js
 const Category = require("../models/categoryModel");
 
-// 🟢 Get all categories
+//  Get all categories
 exports.getCategories = async (req, res) => {
   try {
     const categories = await Category.find();
@@ -11,7 +11,7 @@ exports.getCategories = async (req, res) => {
   }
 };
 
-// 🟢 Add a new category
+//  Add a new category
 exports.addCategory = async (req, res) => {
   try {
     const category = new Category({ Category: req.body.Category });
@@ -22,7 +22,7 @@ exports.addCategory = async (req, res) => {
   }
 };
 
-// 🟢 Add subcategory to existing category
+//  Add subcategory to existing category
 exports.addSubcategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -39,7 +39,7 @@ exports.addSubcategory = async (req, res) => {
   }
 };
 
-// 🟢 Delete category
+//  Delete category
 exports.deleteCategory = async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id);
@@ -49,7 +49,7 @@ exports.deleteCategory = async (req, res) => {
   }
 };
 
-// 🟢 Delete a subcategory
+//  Delete a subcategory
 exports.deleteSubcategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.catId);

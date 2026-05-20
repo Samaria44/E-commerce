@@ -5,16 +5,16 @@ import {
   FiPackage,
   FiTag,
   FiShoppingBag,
-  FiUsers,
   FiMessageSquare,
+  FiShoppingCart,
 } from "react-icons/fi";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: <FiGrid />, end: true },
-  { to: "/dashboard/products", label: "Products", icon: <FiPackage /> },
-  { to: "/dashboard/categories", label: "Categories", icon: <FiTag /> },
-  { to: "/dashboard/orders", label: "Orders", icon: <FiShoppingBag /> },
-  { to: "/dashboard/users", label: "Messages", icon: <FiMessageSquare /> },
+  { to: "/dashboard",            label: "Dashboard",  icon: <FiGrid size={16} />,         end: true },
+  { to: "/dashboard/products",   label: "Products",   icon: <FiPackage size={16} /> },
+  { to: "/dashboard/categories", label: "Categories", icon: <FiTag size={16} /> },
+  { to: "/dashboard/orders",     label: "Orders",     icon: <FiShoppingBag size={16} /> },
+  { to: "/dashboard/users",      label: "Messages",   icon: <FiMessageSquare size={16} /> },
 ];
 
 export default function Slidebar() {
@@ -22,7 +22,9 @@ export default function Slidebar() {
     <div className="sidebar">
       {/* Brand */}
       <div className="sidebar-brand">
-        <div className="sidebar-brand-icon">🛍️</div>
+        <div className="sidebar-brand-icon">
+          <FiShoppingCart size={18} color="#fff" />
+        </div>
         <div>
           <div className="sidebar-brand-text">ShopAdmin</div>
           <div className="sidebar-brand-sub">Management Panel</div>

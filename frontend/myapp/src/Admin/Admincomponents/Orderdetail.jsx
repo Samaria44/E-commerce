@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 import "./orderdetail.css";
 
 export default function OrderDetail() {
-  const { id } = useParams(); // correct param name
+  const { id } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/orders/${id}`); // ✅ use id
+        const res = await fetch(`http://localhost:8000/orders/${id}`);
         if (!res.ok) throw new Error("Order not found");
         const data = await res.json();
         setOrder(data);
@@ -20,7 +21,7 @@ export default function OrderDetail() {
     };
 
     fetchOrder();
-  }, [id]); // ✅ correct dependency
+  }, [id]);
 
   if (!order) return <h2>Loading...</h2>;
 
@@ -73,7 +74,8 @@ export default function OrderDetail() {
       )}
 
       <button onClick={() => navigate(-1)} className="back-btn">
-        ← Back to Orders
+        <FiArrowLeft size={15} style={{ marginRight: 6 }} />
+        Back to Orders
       </button>
     </div>
   );

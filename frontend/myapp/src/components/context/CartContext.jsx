@@ -4,8 +4,12 @@ const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
-    const saved = localStorage.getItem("cartItems");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("cartItems");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
   });
 
   // Persist to localStorage
@@ -13,38 +17,37 @@ export default function CartProvider({ children }) {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // ➕ Add product to cart
+  // Add product to cart — uses _id (MongoDB) as the unique identifier
   const addToCart = (product) => {
-    const key = `${product.id}-${product.size || ""}-${product.color || ""}-${product.subcategory || ""}`;
+    const id = product._id || product.id;
+    const key = `${id}-${product.size || ""}-${product.color || ""}-${product.subCategory || ""}`;
+
     setCartItems((prev) => {
       const existing = prev.find((item) => item.key === key);
-
       if (existing) {
-        // If same variation exists, just increase qty
         return prev.map((item) =>
           item.key === key ? { ...item, qty: item.qty + 1 } : item
         );
-      } else {
-        // Add new product with unique key
-        return [
-          ...prev,
-          {
-            ...product,
-            key,
-            qty: 1,
-            price: Number(product.price) || 0,
-          },
-        ];
       }
+      return [
+        ...prev,
+        {
+          ...product,
+          _id: id,
+          key,
+          qty: 1,
+          price: Number(product.price) || 0,
+        },
+      ];
     });
   };
 
-  // ❌ Remove product
+  // Remove product
   const removeFromCart = (key) => {
     setCartItems((prev) => prev.filter((item) => item.key !== key));
   };
 
-  // 🔄 Update quantity
+  // Update quantity
   const updateQuantity = (key, qty) => {
     setCartItems((prev) =>
       prev.map((item) =>
@@ -53,14 +56,16 @@ export default function CartProvider({ children }) {
     );
   };
 
-  // 🧹 Clear cart
+  // Clear cart
   const clearCart = () => {
     setCartItems([]);
     localStorage.removeItem("cartItems");
   };
 
-  // 🧮 Total price & count
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
+  );
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
@@ -80,5 +85,4 @@ export default function CartProvider({ children }) {
   );
 }
 
-// Custom hook
 export const useCart = () => useContext(CartContext);

@@ -1,22 +1,20 @@
-// src/pages/SearchResults.js
 import "./search.css";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+const BACKEND_ORIGIN = "http://localhost:8000";
+const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
 
 export default function SearchResults() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]); // fetched from backend
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const params = new URLSearchParams(location.search);
   const query = params.get("query")?.toLowerCase().trim() || "";
 
-  const BACKEND_ORIGIN = "http://localhost:8000"; // your backend base URL
-  const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
-
-  // ✅ Fetch all products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -24,7 +22,6 @@ export default function SearchResults() {
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
 
-        // ✅ Fix image paths (in case they are relative)
         const fixedProducts = data.map((product) => ({
           ...product,
           image: product.image?.startsWith("http")
@@ -43,31 +40,25 @@ export default function SearchResults() {
     fetchProducts();
   }, []);
 
-  // ✅ Improved search filtering logic
   const filteredProducts = products.filter((product) => {
+    if (!query) return true;
     const queryWords = query.split(" ").filter(Boolean);
     const name = product.name?.toLowerCase() || "";
     const category = product.category?.toLowerCase() || "";
-    const color = product.color?.toLowerCase() || "";
     const description = product.description?.toLowerCase() || "";
 
     return queryWords.some((word) => {
-      const regex = new RegExp(`\\b${word}\\b`, "i");
-      return (
-        regex.test(name) ||
-        regex.test(category) ||
-        regex.test(color) ||
-        regex.test(description)
-      );
+      const regex = new RegExp(word, "i");
+      return regex.test(name) || regex.test(category) || regex.test(description);
     });
   });
 
-  // ✅ Handle product click → navigate to detail page
+  // Fixed: use _id (MongoDB field) not id
   const handleProductClick = (product) => {
-    navigate(`/products/${product.id}`); // using product ID from backend
+    navigate(`/products/${product._id}`);
   };
 
-  if (loading) return <h2>Loading products...</h2>;
+  if (loading) return <p style={{ textAlign: "center", padding: "60px" }}>Loading...</p>;
 
   return (
     <div className="search-results">
@@ -76,22 +67,25 @@ export default function SearchResults() {
       </h2>
 
       {filteredProducts.length === 0 ? (
-        <p>No products found.</p>
+        <p className="no-results">No products found for "{query}".</p>
       ) : (
         <div className="search-products-grid">
           {filteredProducts.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="search-product-card"
               onClick={() => handleProductClick(product)}
             >
               <img
                 src={product.image || PLACEHOLDER}
                 alt={product.name}
-                onError={(e) => (e.target.src = PLACEHOLDER)}
+                onError={(e) => { e.target.src = PLACEHOLDER; }}
               />
-              <h3>{product.name}</h3>
-              <p>{product.category}</p>
+              <div className="search-card-info">
+                <h3>{product.name}</h3>
+                <p className="search-card-category">{product.category}</p>
+                <p className="search-card-price">Rs {product.price}</p>
+              </div>
             </div>
           ))}
         </div>

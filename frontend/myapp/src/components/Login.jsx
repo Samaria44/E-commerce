@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function Login() {
-  const [loginForm, setLoginForm] = useState({
-    Email: "",
-    Passward: "",
-  });
+  const [loginForm, setLoginForm] = useState({ Email: "", Password: "" });
+  const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
 
-  const authToken = localStorage.getItem("authToken");
-  const tokenPass = JSON.parse(authToken);
-
   useEffect(() => {
-    if (tokenPass) {
-      navigate("/User");
+    try {
+      const token = localStorage.getItem("authToken");
+      if (token && JSON.parse(token)) navigate("/User");
+    } catch {
+      localStorage.removeItem("authToken");
     }
-  }, [tokenPass, navigate]);
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,27 +24,23 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    if (!loginForm.Email || !loginForm.Passward) {
-      alert("Enter all fields");
+    if (!loginForm.Email || !loginForm.Password) {
+      alert("Please fill all fields.");
       return;
     }
-
-    if (
-      loginForm.Email === "example@gmail.com" &&
-      loginForm.Passward === "0099"
-    ) {
+    if (loginForm.Email === "example@gmail.com" && loginForm.Password === "0099") {
       localStorage.setItem("authToken", JSON.stringify(true));
       navigate("/User");
     } else {
-      alert("Invalid email or password!");
+      alert("Invalid email or password.");
     }
   };
 
   return (
     <div className="login-container">
-      <form className="login-form">
+      <form className="login-form" onSubmit={handleLogin}>
         <h2>Login</h2>
+        <p className="login-sub">Welcome back! Sign in to continue.</p>
 
         <div className="input-group">
           <label htmlFor="email">Email</label>
@@ -57,23 +52,47 @@ export default function Login() {
             value={loginForm.Email}
             onChange={handleChange}
             required
+            autoComplete="email"
           />
         </div>
 
         <div className="input-group">
           <label htmlFor="password">Password</label>
-          <input
-            name="Passward"
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            value={loginForm.Passward}
-            onChange={handleChange}
-            required
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              name="Password"
+              type={showPass ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              value={loginForm.Password}
+              onChange={handleChange}
+              required
+              autoComplete="current-password"
+              style={{ paddingRight: "44px" }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass(!showPass)}
+              style={{
+                position: "absolute",
+                right: "12px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "#9ca3af",
+                display: "flex",
+                alignItems: "center",
+                padding: 0,
+              }}
+            >
+              {showPass ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+            </button>
+          </div>
         </div>
 
-        <button type="button" className="login-btn" onClick={handleLogin}>
+        <button type="submit" className="login-btn">
           Login
         </button>
       </form>

@@ -1,48 +1,46 @@
 /* ===================================================
-   PRODUCT CAROUSEL — Redesigned
+   PRODUCT CAROUSEL
    =================================================== */
 
 .carousel-container {
   width: 100%;
   background: #fff;
-  padding: 56px 5%;
+  padding: 60px 5%;
   box-sizing: border-box;
 }
 
-/* Header */
 .carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-  gap: 12px;
+  margin-bottom: 32px;
 }
 
 .carousel-header h2 {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
   color: #111827;
   letter-spacing: -0.5px;
   position: relative;
+  padding-bottom: 10px;
 }
 
 .carousel-header h2::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -8px;
-  width: 40px;
+  bottom: 0;
+  width: 36px;
   height: 3px;
   background: #e91e63;
   border-radius: 3px;
 }
 
-/* Arrow buttons */
 .carousel-arrows {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .carousel-arrows button {
@@ -50,30 +48,28 @@
   border: 1.5px solid #e5e7eb;
   color: #374151;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   cursor: pointer;
-  font-size: 14px;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .carousel-arrows button:hover {
   background: #111827;
   border-color: #111827;
   color: #fff;
-  transform: scale(1.05);
 }
 
-/* Scroll track */
 .carousel-track {
   display: flex;
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
   scrollbar-width: none;
 }
 
@@ -84,11 +80,11 @@
 /* Product card */
 .carousel-card {
   flex: 0 0 auto;
-  width: 260px;
+  width: 240px;
   background: #fff;
   border-radius: 16px;
   border: 1px solid #f3f4f6;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -100,10 +96,9 @@
   border-color: #e5e7eb;
 }
 
-/* Product image */
 .carousel-card img {
   width: 100%;
-  height: 280px;
+  height: 260px;
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
@@ -113,13 +108,12 @@
   transform: scale(1.04);
 }
 
-/* Info section */
 .carousel-card-info {
-  padding: 16px;
+  padding: 14px 16px;
 }
 
 .carousel-card-info h3 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 10px;
@@ -128,7 +122,6 @@
   text-overflow: ellipsis;
 }
 
-/* Price + Cart row */
 .product-bottom {
   display: flex;
   align-items: center;
@@ -144,13 +137,13 @@
 .price {
   font-weight: 700;
   color: #111827;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .old-price {
   text-decoration: line-through;
   color: #9ca3af;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* Cart button */
@@ -159,14 +152,14 @@
   color: #fff;
   border: none;
   border-radius: 10px;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 15px;
+  flex-shrink: 0;
 }
 
 .cart-btn:hover {
@@ -175,34 +168,32 @@
   box-shadow: 0 4px 12px rgba(233,30,99,0.3);
 }
 
-/* Loading text */
 .loading-text {
   text-align: center;
   color: #9ca3af;
-  padding: 40px;
-  font-size: 16px;
+  padding: 60px;
+  font-size: 15px;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .carousel-container { padding: 40px 4%; }
-  .carousel-card { width: 240px; }
+  .carousel-container { padding: 48px 4%; }
+  .carousel-card { width: 220px; }
   .carousel-card img { height: 240px; }
 }
 
 @media (max-width: 768px) {
-  .carousel-container { padding: 32px 3%; }
-  .carousel-header { flex-direction: row; }
+  .carousel-container { padding: 36px 4%; }
   .carousel-header h2 { font-size: 20px; }
-  .carousel-card { width: 200px; }
+  .carousel-card { width: 190px; }
   .carousel-card img { height: 200px; }
 }
 
 @media (max-width: 480px) {
-  .carousel-container { padding: 24px 4%; }
+  .carousel-container { padding: 28px 4%; }
   .carousel-header h2 { font-size: 18px; }
-  .carousel-card { width: 170px; }
+  .carousel-card { width: 160px; }
   .carousel-card img { height: 170px; }
-  .carousel-card-info { padding: 12px; }
-  .cart-btn { width: 34px; height: 34px; }
+  .carousel-card-info { padding: 10px 12px; }
+  .cart-btn { width: 32px; height: 32px; }
 }

@@ -15,7 +15,7 @@ export default function AdminLayout() {
       {/* Sidebar */}
       <Slidebar />
 
-      {/* Main area — header + content rendered by child routes */}
+      {/* Main area */}
       <div
         style={{
           flex: 1,

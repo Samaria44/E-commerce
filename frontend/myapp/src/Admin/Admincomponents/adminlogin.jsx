@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./adminLogin.css";
 import { useNavigate } from "react-router-dom";
+import { FiShoppingCart, FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function AdminLogin() {
   const [loginForm, setLoginForm] = useState({ Email: "", Password: "" });
@@ -37,7 +38,9 @@ export default function AdminLogin() {
         <form className="login-form" onSubmit={handleLogin}>
           {/* Brand */}
           <div className="login-brand">
-            <div className="login-brand-icon">🛍️</div>
+            <div className="login-brand-icon">
+              <FiShoppingCart size={20} color="#fff" />
+            </div>
             <span className="login-brand-name">ShopAdmin</span>
           </div>
 
@@ -84,11 +87,13 @@ export default function AdminLogin() {
                   border: "none",
                   cursor: "pointer",
                   color: "#94a3b8",
-                  fontSize: "14px",
+                  fontSize: "16px",
                   padding: 0,
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {showPass ? "Hide" : "Show"}
+                {showPass ? <FiEyeOff size={16} /> : <FiEye size={16} />}
               </button>
             </div>
           </div>

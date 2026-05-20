@@ -259,20 +259,28 @@ td img {
   box-shadow: 0 4px 14px rgba(99,102,241,0.3);
 }
 
-/* Close icon */
-.close-icon, .close-btn {
+/* Close icon — works as both svg and button */
+.close-icon,
+.close-btn {
   position: absolute;
   top: 16px;
   right: 16px;
   color: #94a3b8;
   cursor: pointer;
   font-size: 20px;
-  padding: 4px;
+  padding: 6px;
   border-radius: 6px;
   transition: all 0.2s;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-.close-icon:hover, .close-btn:hover {
+.close-icon:hover,
+.close-btn:hover {
   color: #0f172a;
   background: #f1f5f9;
 }
