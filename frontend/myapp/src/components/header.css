@@ -1,107 +1,140 @@
-/* === Navbar Container === */
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 50px;
-  background: #fffdfd;
-  flex-wrap: wrap;
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
+/* ===================================================
+   FRONTEND HEADER — Modern E-commerce Navbar
+   =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --nav-height: 72px;
+  --accent: #e91e63;
+  --accent-dark: #c2185b;
+  --text: #111827;
+  --text-light: #6b7280;
+  --border: #f3f4f6;
+  --bg: #ffffff;
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
 
-/* === Logo === */
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-}
-/* === Sticky Navbar Wrapper === */
+/* ===== WRAPPER ===== */
 .navbar-wrapper {
   position: sticky;
   top: 0;
   z-index: 999;
-  background: #fff;
-  transition: all 0.3s ease;
+  background: var(--bg);
+  transition: box-shadow 0.3s ease;
 }
 
-/* When scrolled */
 .navbar-wrapper.sticky {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow);
 }
 
-/* === Navigation Links === */
+/* ===== CONTAINER ===== */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  height: var(--nav-height);
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  cursor: pointer;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo i {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+/* ===== NAV LINKS ===== */
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 4px;
   align-items: center;
-  transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
   position: relative;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 .nav-links a,
 .dropdown-toggle {
   text-decoration: none;
-  color: #333;
+  color: var(--text-light);
   font-weight: 500;
-  font-size: 17px;
+  font-size: 15px;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 8px 10px;
-  transition: color 0.3s;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: block;
+  white-space: nowrap;
 }
 
-/* Remove gray hover background on Category */
+.nav-links a:hover,
 .dropdown-toggle:hover {
-  background: transparent;
-  color: #e91e63;
+  color: var(--text);
+  background: #f9fafb;
 }
 
-.nav-links a:hover {
-  color: #e91e63;
-}
-
-
-/* === Active Link === */
+/* Active link */
 .active-link {
-  color: #e91e63;
+  color: var(--accent) !important;
   font-weight: 600;
-  position: relative;
 }
 
 .active-link::after {
   content: "";
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
+  bottom: -2px;
+  left: 14px;
+  right: 14px;
   height: 2px;
-  background: #e91e63;
+  background: var(--accent);
   border-radius: 2px;
 }
 
-/* === Dropdown Menu === */
+/* ===== DROPDOWN ===== */
+.has-dropdown {
+  position: relative;
+}
+
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   left: 0;
   list-style: none;
-  padding: 8px 0;
-  background: #fff; /* white dropdown box */
-  border: 1px solid #eee;
-  border-radius: 8px;
-  min-width: 150px;
-  z-index: 10;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  min-width: 180px;
+  z-index: 100;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  animation: dropIn 0.15s ease;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .has-dropdown:hover .dropdown-menu {
@@ -109,112 +142,26 @@
 }
 
 .dropdown-menu li {
-  padding: 6px 15px;
+  position: relative;
 }
 
-.dropdown-menu a {
+.dropdown-menu li a {
   display: block;
-  width: 100%;
-  color: #444;
-  text-decoration: none;
-  transition: color 0.3s;
+  padding: 9px 12px;
+  color: #374151;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 0.15s;
 }
 
-/* Remove gray hover box inside dropdown */
-.dropdown-menu li:hover {
-  background: transparent;
+.dropdown-menu li a:hover {
+  background: #f9fafb;
+  color: var(--accent);
 }
 
-.dropdown-menu a:hover {
-  color: #e91e63;
-}
-
-/* === Dropdown Arrow === */
-.arrow {
-  margin-left: 6px;
-  transition: transform 0.3s ease;
-}
-
-.has-dropdown:hover .arrow {
-  transform: rotate(180deg);
-}
-
-/* === Search & Icons === */
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.search-wrapper {
+/* Sub-dropdown */
+.has-sub-dropdown {
   position: relative;
-}
-
-.search-input {
-  padding: 8px 15px;
-  border: 1px solid lightgray;
-  border-radius: 15px;
-  outline: none;
-  width: 240px;
-  transition: width 0.3s ease;
-}
-
-.search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: gray;
-}
-
-.nav-actions i {
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* === Cart Icon === */
-.cart-icon {
-  position: relative;
-  font-size: 1.5rem;
-  color: #111;
-  margin-right: 20px;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background-color: #ff3e6c;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 7px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-/* === Mobile Menu Button === */
-.menu-toggle {
-  display: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-.nav-links .has-dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  min-width: 180px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  z-index: 10;
-}
-
-.nav-links .has-dropdown:hover .dropdown-menu {
-  display: block;
 }
 
 .sub-dropdown {
@@ -222,66 +169,215 @@
   position: absolute;
   left: 100%;
   top: 0;
-  background: #f9f9f9;
-  min-width: 150px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #fff;
+  min-width: 160px;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  z-index: 101;
 }
 
 .has-sub-dropdown:hover .sub-dropdown {
   display: block;
 }
 
-.dropdown-menu li,
-.sub-dropdown li {
-  list-style: none;
-}
-
-.dropdown-menu li a,
 .sub-dropdown li a {
   display: block;
-  padding: 8px 12px;
-  color: #333;
+  padding: 9px 12px;
+  color: #374151;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.sub-dropdown li a:hover {
+  background: #f9fafb;
+  color: var(--accent);
+}
+
+/* ===== NAV ACTIONS ===== */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Search */
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 9px 40px 9px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 24px;
+  outline: none;
+  width: 220px;
+  font-size: 14px;
+  background: #f9fafb;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+  background: #fff;
+  width: 260px;
+  box-shadow: 0 0 0 3px rgba(233,30,99,0.08);
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  color: #9ca3af;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Cart icon */
+.cart-icon {
+  position: relative;
+  font-size: 20px;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
 }
 
-.dropdown-menu li a:hover,
-.sub-dropdown li a:hover {
-  background: #eee;
+.cart-icon:hover {
+  background: #f9fafb;
+  color: var(--accent);
 }
 
-/* === Responsive Styles === */
+.cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+}
+
+/* User icon */
+.nav-actions .fa-user {
+  font-size: 18px;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-actions a:hover .fa-user,
+.nav-actions a.fa-user:hover {
+  background: #f9fafb;
+  color: var(--accent);
+}
+
+/* ===== MOBILE TOGGLE ===== */
+.menu-toggle {
+  display: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.menu-toggle:hover {
+  background: #f9fafb;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .navbar-container { padding: 0 30px; }
+  .search-input { width: 180px; }
+}
+
 @media (max-width: 900px) {
-  .navbar-container {
-    padding: 15px 20px;
-  }
+  .navbar-container { padding: 0 20px; }
 
   .nav-links {
     flex-direction: column;
-    gap: 20px;
+    gap: 4px;
     width: 100%;
-    background: white;
+    background: #fff;
     position: absolute;
-    top: 70px;
+    top: var(--nav-height);
     left: 0;
-    text-align: center;
-    padding: 20px 0;
+    right: 0;
+    padding: 12px 16px 20px;
     display: none;
+    border-top: 1px solid #f3f4f6;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 998;
   }
 
   .nav-links.active {
     display: flex;
   }
 
-  .menu-toggle {
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a,
+  .dropdown-toggle {
+    width: 100%;
+    padding: 10px 14px;
+  }
+
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-top: 4px;
     display: block;
   }
 
-  .nav-actions {
-    gap: 10px;
+  .sub-dropdown {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-top: 4px;
+    display: block;
   }
 
-  .search-input {
-    width: 150px;
-  }
+  .menu-toggle { display: block; }
+
+  .search-input { width: 140px; }
 }
 
+@media (max-width: 480px) {
+  .search-input { width: 120px; }
+  .search-input:focus { width: 140px; }
+}

@@ -1,129 +1,162 @@
+/* ===================================================
+   ADMIN ORDER DETAIL — Redesigned
+   =================================================== */
+
 .orderdetail-container {
-  padding: 40px;
   background: #fff;
-  color: #000;
-  min-height: 100vh;
-  font-family: "Poppins", sans-serif;
-  margin-left: 181px;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  padding: 32px;
+  animation: fadeIn 0.3s ease;
+  margin-top: 68px;
 }
 
-.orderdetail-title {
-  font-size: 26px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.orderdetail-container > h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 24px;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.orderdetail-container > h2 span {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+/* Info grid */
+.orderdetail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.orderdetail-info-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.orderdetail-info-card .info-label {
+  font-size: 11px;
   font-weight: 600;
-  margin-bottom: 20px;
-  color: #000;
-  border-bottom: 2px solid #000;
-  display: inline-block;
-  padding-bottom: 5px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
 }
 
-.order-id {
-  color: #555;
-  font-weight: 500;
-}
-
-/* Order Information Box */
-.orderdetail-info {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 25px;
-  border: 1px solid #ddd;
-  line-height: 1.8;
-}
-
-.orderdetail-info p {
+.orderdetail-info-card .info-value {
   font-size: 15px;
-  color: #333;
-  margin: 6px 0;
+  font-weight: 600;
+  color: #0f172a;
 }
 
-.orderdetail-info strong {
-  color: #000;
+/* Inline info (fallback) */
+.orderdetail-container > p {
+  font-size: 14px;
+  color: #374151;
+  margin: 8px 0;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #6366f1;
 }
 
-/* Table Styles */
+.orderdetail-container > p strong {
+  color: #0f172a;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* ====== TABLE ====== */
 .orderdetail-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
-  background: #fff;
-  border-radius: 10px;
+  margin: 24px 0;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #ddd;
+  border: 1px solid #e2e8f0;
 }
 
 .orderdetail-table th,
 .orderdetail-table td {
   padding: 14px 18px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
+  text-align: left;
+  font-size: 14px;
 }
 
 .orderdetail-table th {
-  background: #222020;
-  color: #fff;
+  background: #0f172a;
+  color: #e2e8f0;
   font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 .orderdetail-table td {
-  color: #333;
+  color: #374151;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
 }
 
-.orderdetail-table tr:hover {
-  background: #f3f3f3;
-  transition: 0.3s ease;
+.orderdetail-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.orderdetail-table tbody tr:hover {
+  background: #f8fafc;
 }
 
 .orderdetail-table img {
-  border-radius: 6px;
-  width: 60px;
-  height: 60px;
+  border-radius: 8px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
+  border: 1px solid #e2e8f0;
 }
 
 /* Back Button */
 .back-btn {
-  background: #1f1e1e;
+  background: #0f172a;
   color: #fff;
   border: none;
-  padding: 10px 22px;
-  border-radius: 6px;
+  padding: 11px 24px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s ease;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .back-btn:hover {
-  background: #333;
-  transform: translateY(-2px);
-}
-
-/* Empty State */
-.orderdetail-container h2 {
-  text-align: center;
-  color: #000;
-  margin-bottom: 20px;
+  background: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(15,23,42,0.2);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .orderdetail-container {
-    padding: 20px;
-  }
-
-  .orderdetail-title {
-    font-size: 20px;
-  }
-
-  .orderdetail-table th,
-  .orderdetail-table td {
-    padding: 10px;
-    font-size: 13px;
-  }
-
-  .orderdetail-info {
-    font-size: 14px;
-  }
+  .orderdetail-container { padding: 20px; }
+  .orderdetail-table th, .orderdetail-table td { padding: 10px; font-size: 13px; }
 }

@@ -1,44 +1,50 @@
-/* ===== Page Layout ===== */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-}
+/* ===================================================
+   FRONTEND LOGIN — Modern Design
+   =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Center the login box */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* full viewport height */
-  background-color: #f5f5f5;
+  min-height: 80vh;
+  background: #f9fafb;
+  padding: 40px 20px;
+  font-family: 'Inter', 'Poppins', sans-serif;
 }
 
-/* ===== Login Box ===== */
 .login-form {
   background: #fff;
-  padding: 40px 35px;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-  width: 350px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 48px 44px;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid #f3f4f6;
+  animation: slideUp 0.35s ease;
 }
 
-/* Smooth hover effect */
-.login-form:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.2);
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Heading ===== */
 .login-form h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
   text-align: center;
-  color: #222;
-  margin-bottom: 25px;
-  font-weight: 600;
 }
 
-/* ===== Input Groups ===== */
+.login-form .login-sub {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
 .input-group {
   margin-bottom: 20px;
   display: flex;
@@ -46,48 +52,56 @@ body, html {
 }
 
 .input-group label {
-  margin-bottom: 6px;
-  color: #333;
-  font-weight: 500;
+  margin-bottom: 7px;
+  color: #374151;
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .input-group input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
   font-size: 15px;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  background: #f9fafb;
+  color: #111827;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .input-group input:focus {
-  border-color: #000;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-color: #e91e63;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(233,30,99,0.08);
 }
 
-/* ===== Button ===== */
+.input-group input::placeholder {
+  color: #9ca3af;
+}
+
 .login-btn {
   width: 100%;
-  padding: 12px;
-  background: #000;
+  padding: 13px;
+  background: #111827;
   color: #fff;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-
+  transition: all 0.2s ease;
+  font-family: inherit;
+  letter-spacing: 0.2px;
 }
 
 .login-btn:hover {
-  background: #333;
-  transform: scale(1.02);
+  background: #1f2937;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(17,24,39,0.2);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 400px) {
-  .login-form {
-    width: 90%;
-    padding: 30px 20px;
-  }
+@media (max-width: 480px) {
+  .login-form { padding: 36px 24px; }
+  .login-form h2 { font-size: 22px; }
 }

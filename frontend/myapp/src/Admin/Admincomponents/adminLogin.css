@@ -1,44 +1,95 @@
-/* ===== Page Layout ===== */
+/* ===================================================
+   ADMIN LOGIN — Modern Split-Screen Design
+   =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body, html {
   height: 100%;
-  margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Inter', 'Poppins', sans-serif;
 }
 
-/* Center the login box */
 .login-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+/* Left decorative panel */
+.login-container::before {
+  content: '';
+  flex: 1;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+  display: none;
+}
+
+/* Center card */
+.login-form-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* full viewport height */
-  background-color: #f5f5f5;
+  width: 100%;
+  padding: 40px 20px;
 }
 
-/* ===== Login Box ===== */
 .login-form {
   background: #fff;
-  padding: 40px 35px;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-  width: 350px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 48px 44px;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 420px;
+  animation: slideUp 0.4s ease;
 }
 
-/* Smooth hover effect */
-.login-form:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.2);
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Heading ===== */
+/* Brand */
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.login-brand-icon {
+  width: 42px;
+  height: 42px;
+  background: #6366f1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+}
+
+.login-brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Heading */
 .login-form h2 {
-  text-align: center;
-  color: #222;
-  margin-bottom: 25px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
 }
 
-/* ===== Input Groups ===== */
+.login-form .login-sub {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 32px;
+}
+
+/* Input Groups */
 .input-group {
   margin-bottom: 20px;
   display: flex;
@@ -46,48 +97,74 @@ body, html {
 }
 
 .input-group label {
-  margin-bottom: 6px;
-  color: #333;
-  font-weight: 500;
+  margin-bottom: 7px;
+  color: #374151;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.2px;
 }
 
 .input-group input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
   font-size: 15px;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: all 0.2s ease;
+  background: #f8fafc;
+  color: #0f172a;
 }
 
 .input-group input:focus {
-  border-color: #000;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-color: #6366f1;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
 }
 
-/* ===== Button ===== */
+.input-group input::placeholder {
+  color: #94a3b8;
+}
+
+/* Button */
 .login-btn {
   width: 100%;
-  padding: 12px;
-  background: #000;
+  padding: 13px;
+  background: #6366f1;
   color: #fff;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-
+  transition: all 0.2s ease;
+  letter-spacing: 0.2px;
+  margin-top: 4px;
 }
 
 .login-btn:hover {
-  background: #333;
-  transform: scale(1.02);
+  background: #4f46e5;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.35);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 400px) {
+.login-btn:active {
+  transform: translateY(0);
+}
+
+/* Hint text */
+.login-hint {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
   .login-form {
-    width: 90%;
-    padding: 30px 20px;
+    padding: 36px 24px;
+  }
+  .login-form h2 {
+    font-size: 22px;
   }
 }

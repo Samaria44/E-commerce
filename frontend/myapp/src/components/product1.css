@@ -1,105 +1,134 @@
-/* === Carousel Container === */
+/* ===================================================
+   PRODUCT CAROUSEL — Redesigned
+   =================================================== */
+
 .carousel-container {
   width: 100%;
-  background: #f8f8f8;
-  padding: 3rem 5%;
+  background: #fff;
+  padding: 56px 5%;
   box-sizing: border-box;
 }
 
-/* === Header Section (Title + Arrows) === */
+/* Header */
 .carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 28px;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 12px;
 }
 
 .carousel-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #222;
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+  position: relative;
 }
 
+.carousel-header h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background: #e91e63;
+  border-radius: 3px;
+}
+
+/* Arrow buttons */
 .carousel-arrows {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .carousel-arrows button {
   background: #fff;
-  border: 1px solid #ddd;
-  color: #333;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  margin-left: 10px;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-arrows button:hover {
-  background: #333;
+  background: #111827;
+  border-color: #111827;
   color: #fff;
+  transform: scale(1.05);
 }
 
-/* === Scroll Section === */
+/* Scroll track */
 .carousel-track {
   display: flex;
-  gap: 1.5rem;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
-  scrollbar-width: none; /* Firefox */
+  padding-bottom: 8px;
+  scrollbar-width: none;
 }
 
 .carousel-track::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
-/* === Product Card === */
+/* Product card */
 .carousel-card {
   flex: 0 0 auto;
-  width: 300px;
+  width: 260px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   overflow: hidden;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .carousel-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  border-color: #e5e7eb;
 }
 
-/* === Product Image === */
+/* Product image */
 .carousel-card img {
   width: 100%;
-  height: 316px;
+  height: 280px;
   object-fit: cover;
-  padding: 12px;
-  border-radius: 14px;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-/* === Info Section === */
+.carousel-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Info section */
 .carousel-card-info {
-  padding: 1rem 1.2rem;
-  display: flex;
-  flex-direction: column;
-  /* gap: 10px; */
+  padding: 16px;
 }
 
 .carousel-card-info h3 {
-  font-size: 1.05rem;
+  font-size: 15px;
   font-weight: 600;
-  color: #222;
-  margin-bottom: 3px;
+  color: #111827;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* === Price + Cart === */
+/* Price + Cart row */
 .product-bottom {
   display: flex;
   align-items: center;
@@ -109,114 +138,71 @@
 .price-section {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .price {
   font-weight: 700;
-  color: #111;
-  font-size: 1rem;
+  color: #111827;
+  font-size: 16px;
 }
 
 .old-price {
   text-decoration: line-through;
-  color: #aaa;
-  font-size: 0.85rem;
+  color: #9ca3af;
+  font-size: 13px;
 }
 
-/* === Cart Button === */
+/* Cart button */
 .cart-btn {
-  background: #111;
+  background: #111827;
   color: #fff;
   border: none;
   border-radius: 10px;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  font-size: 15px;
 }
 
 .cart-btn:hover {
-  background: #ff6f61;
+  background: #e91e63;
   transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(233,30,99,0.3);
 }
 
-/* === Responsive Design === */
+/* Loading text */
+.loading-text {
+  text-align: center;
+  color: #9ca3af;
+  padding: 40px;
+  font-size: 16px;
+}
 
-/* Large Tablets / Small Laptops */
+/* Responsive */
 @media (max-width: 1024px) {
-  .carousel-container {
-    padding: 2.5rem 4%;
-  }
-
-  .carousel-card {
-    width: 260px;
-  }
-
-  .carousel-card img {
-    height: 220px;
-  }
-
-  .carousel-header h2 {
-    font-size: 1.6rem;
-  }
+  .carousel-container { padding: 40px 4%; }
+  .carousel-card { width: 240px; }
+  .carousel-card img { height: 240px; }
 }
 
-/* Tablets */
 @media (max-width: 768px) {
-  .carousel-container {
-    padding: 2rem 3%;
-  }
-
-  .carousel-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .carousel-card {
-    width: 220px;
-  }
-
-  .carousel-card img {
-    height: 180px;
-  }
-
-  .carousel-card-info {
-    padding: 0.9rem;
-  }
-
-  .price {
-    font-size: 0.95rem;
-  }
+  .carousel-container { padding: 32px 3%; }
+  .carousel-header { flex-direction: row; }
+  .carousel-header h2 { font-size: 20px; }
+  .carousel-card { width: 200px; }
+  .carousel-card img { height: 200px; }
 }
 
-/* Mobile Phones */
 @media (max-width: 480px) {
-  .carousel-container {
-    padding: 1.5rem 2%;
-  }
-
-  .carousel-header h2 {
-    font-size: 1.4rem;
-  }
-
-  .carousel-card {
-    width: 180px;
-  }
-
-  .carousel-card img {
-    height: 160px;
-  }
-
-  .carousel-card-info {
-    padding: 0.8rem;
-  }
-
-  .cart-btn {
-    width: 36px;
-    height: 36px;
-  }
+  .carousel-container { padding: 24px 4%; }
+  .carousel-header h2 { font-size: 18px; }
+  .carousel-card { width: 170px; }
+  .carousel-card img { height: 170px; }
+  .carousel-card-info { padding: 12px; }
+  .cart-btn { width: 34px; height: 34px; }
 }

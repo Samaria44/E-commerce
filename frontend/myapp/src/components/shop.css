@@ -1,7 +1,13 @@
-/* === Container Animation === */
+/* ===================================================
+   SHOP / PRODUCTS PAGE — Redesigned
+   =================================================== */
+
+/* Container animation */
 .container {
-  padding: 4rem 6%;
-  transition: all 0.8s ease;
+  padding: 4rem 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: all 0.6s ease;
 }
 
 .container.hidden {
@@ -14,16 +20,17 @@
   transform: translateY(0);
 }
 
-/* === Section Title === */
+/* Section header */
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 40px;
 }
 
 .page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0f0f0f;
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
   position: relative;
   display: inline-block;
 }
@@ -32,78 +39,68 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -8px;
+  bottom: -10px;
   transform: translateX(-50%);
-  width: 60px;
+  width: 48px;
   height: 3px;
-  background: #ff6f61;
+  background: #e91e63;
   border-radius: 3px;
 }
 
-/* === Product Grid === */
+/* Product grid */
 .products-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
 }
 
-/* === Product Card === */
+/* Product card */
 .product-card {
   display: flex;
   flex-direction: column;
-  width: 280px;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  background: #333;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid #f3f4f6;
   text-decoration: none;
-  color: white;
-  transition: all 0.35s ease;
+  color: #111827;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  border-color: #e5e7eb;
 }
 
-/* === Product Image === */
+/* Product image */
 .product-image {
   width: 100%;
-  height: 320px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 14px 14px 0 0;
   transition: transform 0.4s ease;
 }
 
 .product-card:hover .product-image {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-/* === Footer Info === */
+/* Product footer */
 .product-footer {
-  background: #333;
-  padding: 1.2rem 1.5rem;
+  background: #fff;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #ffffff;
-  border-top: 1px solid #eee;
-  transition: background 0.3s ease;
+  border-top: 1px solid #f3f4f6;
 }
 
-.product-card:hover .product-footer {
-  background: #1e1b1b;
-  color: #fff;
-}
-
-/* === Footer Text Elements === */
 .product-name {
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 600;
+  color: #111827;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -111,59 +108,33 @@
 }
 
 .arrow {
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: transform 0.3s ease;
+  font-size: 16px;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .product-card:hover .arrow {
-  transform: translateX(6px);
+  transform: translateX(4px);
+  color: #e91e63;
 }
 
-/* === Responsive Adjustments === */
+/* Responsive */
 @media (max-width: 992px) {
-  .container {
-    padding: 3rem 4%;
-  }
-  .product-card {
-    width: 240px;
-  }
-  .product-image {
-    height: 260px;
-  }
+  .container { padding: 3rem 4%; }
 }
 
 @media (max-width: 768px) {
-  .page-title {
-    font-size: 1.7rem;
-  }
-  .products-container {
-    gap: 1.5rem;
-  }
-  .product-card {
-    width: 220px;
-  }
-  .product-image {
-    height: 240px;
-  }
+  .page-title { font-size: 22px; }
+  .products-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .product-image { height: 240px; }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 2rem 5%;
-  }
-  .page-title {
-    font-size: 1.5rem;
-  }
-  .product-card {
-    width: 100%;
-    max-width: 330px;
-  }
-  .product-image {
-    height: 220px;
-  }
-  .product-footer {
-    font-size: 0.95rem;
-    padding: 1rem;
-  }
+  .container { padding: 2rem 4%; }
+  .page-title { font-size: 20px; }
+  .products-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .product-image { height: 200px; }
+  .product-footer { padding: 12px 14px; }
+  .product-name { font-size: 13px; }
 }

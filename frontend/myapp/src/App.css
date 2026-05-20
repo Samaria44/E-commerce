@@ -1,4 +1,8 @@
-/* === Global === */
+/* ===================================================
+   GLOBAL APP STYLES
+   =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,40 +10,57 @@
 }
 
 body {
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: 'Inter', 'Poppins', Arial, sans-serif;
   background-color: #fff;
-  color: #111;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* === Footer === */
+/* ===== FOOTER ===== */
 .footer {
   width: 100%;
-  background-color: rgb(39, 38, 36);
-  color: #fff;
-  padding: 80px 50px 40px;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 72px 60px 40px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto 48px;
 }
 
 .col {
   flex: 1;
-  margin: 10px 20px;
-  min-width: 200px;
+  min-width: 180px;
 }
 
 .logo-footer {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 .col h3 {
-  margin-bottom: 15px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
 }
 
 .col ul {
@@ -48,15 +69,79 @@ body {
 }
 
 .col li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .col li a {
   text-decoration: none;
-  color: #ffffff;
+  color: #94a3b8;
+  font-size: 14px;
+  transition: color 0.2s;
 }
 
 .col li a:hover {
-  text-decoration: underline;
+  color: #e91e63;
 }
 
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* ===== BUTTON COMPONENT ===== */
+.btn-primary {
+  background: #111827;
+  color: #fff;
+  border: none;
+  padding: 11px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-primary:hover {
+  background: #1f2937;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(17,24,39,0.2);
+}
+
+.btn-accent {
+  background: #e91e63;
+  color: #fff;
+  border: none;
+  padding: 11px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-accent:hover {
+  background: #c2185b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(233,30,99,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .footer { padding: 48px 24px 32px; }
+  .row { gap: 24px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}

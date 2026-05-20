@@ -1,89 +1,152 @@
+/* ===================================================
+   CATEGORY CAROUSEL — Redesigned
+   =================================================== */
+
+/* Reuse carousel-container from product1.css */
 .carousel-container {
-  width: 80%;
-  margin: auto;
-  background: #f8f8f8;
-  padding: 3rem 5%;
+  width: 100%;
+  background: #f9fafb;
+  padding: 56px 5%;
+  box-sizing: border-box;
 }
 
 .carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .carousel-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #222;
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+.carousel-header h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background: #e91e63;
+  border-radius: 3px;
+}
+
+.carousel-arrows {
+  display: flex;
+  gap: 8px;
 }
 
 .carousel-arrows button {
   background: #fff;
-  border: 1px solid #ddd;
-  color: #333;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  margin-left: 10px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-arrows button:hover {
-  background: #333;
+  background: #111827;
+  border-color: #111827;
   color: #fff;
 }
 
 .carousel-track {
   display: flex;
-  gap: 1.5rem;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
+  scrollbar-width: none;
 }
 
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Category card */
 .carousel-category-card {
   flex: 0 0 auto;
-  width: 340px;
-  height: 338px;
-  border-radius: 12px;
+  width: 300px;
+  height: 340px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
+  border: 1px solid #f3f4f6;
 }
 
 .carousel-category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
 }
 
 .carousel-category-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
+.carousel-category-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Overlay */
 .overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: #333;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 100%);
   color: #fff;
-  padding: 1rem;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 24px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
   transition: all 0.3s ease;
 }
 
 .carousel-category-card:hover .overlay {
-  background: rgba(0, 0, 0, 0.8);
+  padding-bottom: 24px;
 }
 
-.carousel-track::-webkit-scrollbar {
-  display: none;
+.overlay .arrow {
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.carousel-category-card:hover .overlay .arrow {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-container { padding: 40px 4%; }
+  .carousel-category-card { width: 240px; height: 280px; }
+  .carousel-header h2 { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .carousel-container { padding: 28px 4%; }
+  .carousel-category-card { width: 200px; height: 240px; }
+  .carousel-header h2 { font-size: 18px; }
 }

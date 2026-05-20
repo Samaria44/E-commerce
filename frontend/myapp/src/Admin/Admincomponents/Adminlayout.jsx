@@ -1,25 +1,31 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Slidebar from "../Admincomponents/AdminSlidebar";
-
-import Admin from "../Adminpages/Dashboard";
-import "../Adminpages/Dashboard";
+import { Outlet } from "react-router-dom";
+import Slidebar from "./AdminSlidebar";
+import "./Admin.css";
 
 export default function AdminLayout() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/dashboard/login");
-  };
-
   return (
-    <div className="admin-layout">
-      <Admin />
-      <div className="admin-main">
-        <Slidebar />
-        <div className="admin-content">
-          <Outlet />
-        </div>
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        background: "#f1f5f9",
+        fontFamily: "'Inter', 'Poppins', sans-serif",
+      }}
+    >
+      {/* Sidebar */}
+      <Slidebar />
+
+      {/* Main area — header + content rendered by child routes */}
+      <div
+        style={{
+          flex: 1,
+          marginLeft: "260px",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
+      >
+        <Outlet />
       </div>
     </div>
   );
