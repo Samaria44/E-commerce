@@ -3,7 +3,7 @@ import axios from "axios";
 import "./product.css";
 import { FiEdit2, FiTrash2, FiX, FiImage, FiPlus } from "react-icons/fi";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 export default function ProductUpload() {
   const [products, setProducts] = useState([]);

@@ -3,7 +3,7 @@ import axios from "axios";
 import { FiTrash2 } from "react-icons/fi";
 import "./user.css";
 
-const BACKEND_URL = "http://localhost:8000/contact"; // your backend API
+const BACKEND_URL = `${process.env.REACT_APP_API_URL || "http://localhost:8000"}/contact`;
 
 export default function AdminContact() {
   const [contacts, setContacts] = useState([]);

@@ -11,7 +11,7 @@ import {
 import "./product.css";
 import "./category.css";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);

@@ -11,7 +11,7 @@ import {
   FiX,
 } from "react-icons/fi";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);

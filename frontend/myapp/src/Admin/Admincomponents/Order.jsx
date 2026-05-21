@@ -3,6 +3,8 @@ import "./order.css";
 import { FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ export default function Orders() {
   // Fetch all orders
   const getOrders = async () => {
     try {
-      const res = await fetch("http://localhost:8000/orders");
+      const res = await fetch(`${BACKEND_ORIGIN}/orders`);
       const data = await res.json();
       setOrders(data);
     } catch (error) {
@@ -27,7 +29,7 @@ export default function Orders() {
     if (!window.confirm("Delete this order?")) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/orders/${_id}`, {
+      const res = await fetch(`${BACKEND_ORIGIN}/orders/${_id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -41,7 +43,7 @@ export default function Orders() {
   // Update order status
   const handleStatusChange = async (_id, status) => {
     try {
-      await fetch(`http://localhost:8000/orders/${_id}`, {
+      await fetch(`${BACKEND_ORIGIN}/orders/${_id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),

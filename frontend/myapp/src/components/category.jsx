@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./categoryProducts.css";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
 
 export default function CategoryProducts() {

@@ -9,7 +9,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const BACKEND_ORIGIN = "http://localhost:8000";
+  const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
   const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
 
   // ✅ Fetch products from backend

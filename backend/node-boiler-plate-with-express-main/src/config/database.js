@@ -6,9 +6,13 @@ const User = db.user;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://samariatajamul563_db_user:lF2D4w14vClQd2y3@cluster0.dfnrai8.mongodb.net/E-commerce?appName=Cluster0"
-    );
+    const uri = process.env.MONGODB_URI;
+
+    if (!uri) {
+      throw new Error("MONGODB_URI environment variable is not set");
+    }
+
+    await mongoose.connect(uri);
 
     console.log("Successfully connected to MongoDB");
 

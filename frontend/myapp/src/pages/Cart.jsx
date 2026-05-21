@@ -3,7 +3,7 @@ import { useCart } from "../components/context/CartContext";
 import "./addtocart.css";
 import Button from "../components/Button";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/150?text=No+Image";
 
 export default function Cart() {

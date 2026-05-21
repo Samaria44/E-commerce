@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./addtocart.css";
 
-const BACKEND_URL = "http://localhost:8000/contact"; // change if different
+const BACKEND_URL = `${process.env.REACT_APP_API_URL || "http://localhost:8000"}/contact`;
 
 export default function Contact() {
   const [formData, setFormData] = useState({

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./addtocart.css";
 import Button from "../components/Button";
 
-const BACKEND_ORIGIN = "http://localhost:8000"; 
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/100?text=No+Image";
 
 export default function Checkout() {

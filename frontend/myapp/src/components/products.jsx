@@ -7,7 +7,7 @@ export default function Product({ products, title }) {
   const [productList, setProductList] = useState(products || []);
   const navigate = useNavigate();
 
-  const BACKEND_ORIGIN = "http://localhost:8000";
+  const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
   const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
 
   // ✅ Fetch products from backend if not passed as props

@@ -10,6 +10,8 @@ import {
   FiArrowUp,
 } from "react-icons/fi";
 
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [totalProducts, setTotalProducts] = useState(0);
@@ -26,8 +28,8 @@ export default function AdminDashboard() {
     const load = async () => {
       try {
         const [pRes, oRes] = await Promise.all([
-          fetch("http://localhost:8000/products"),
-          fetch("http://localhost:8000/orders"),
+          fetch(`${BACKEND_ORIGIN}/products`),
+          fetch(`${BACKEND_ORIGIN}/orders`),
         ]);
         const products = await pRes.json();
         const orders = await oRes.json();
