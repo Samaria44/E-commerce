@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  /* Brand */
-  --accent:        #6366f1;
-  --accent-2:      #8b5cf6;
-  --accent-dark:   #4f46e5;
-  --accent-glow:   rgba(99,102,241,0.25);
+  /* Brand — orange + dark brown */
+  --accent:        #f97316;
+  --accent-2:      #c26418;
+  --accent-dark:   #ea6c00;
+  --accent-glow:   rgba(249,115,22,0.25);
 
-  /* Neutrals */
-  --black:         #0a0a0f;
-  --dark:          #111118;
-  --dark-2:        #1a1a24;
-  --dark-3:        #22222e;
-  --dark-4:        #2e2e3e;
-  --muted:         #6b7280;
-  --muted-2:       #9ca3af;
-  --border:        rgba(255,255,255,0.08);
-  --border-2:      rgba(255,255,255,0.12);
+  /* Neutrals — dark brown base */
+  --black:         #0f0a07;
+  --dark:          #1a1008;
+  --dark-2:        #241508;
+  --dark-3:        #2e1c0e;
+  --dark-4:        #3d2614;
+  --muted:         #8a7060;
+  --muted-2:       #b09880;
+  --border:        rgba(255,200,150,0.08);
+  --border-2:      rgba(255,200,150,0.15);
   --white:         #ffffff;
   --white-90:      rgba(255,255,255,0.9);
   --white-60:      rgba(255,255,255,0.6);
@@ -40,10 +40,10 @@
   --r-full:        9999px;
 
   /* Shadows */
-  --shadow-sm:     0 2px 12px rgba(0,0,0,0.3);
-  --shadow-md:     0 8px 32px rgba(0,0,0,0.4);
-  --shadow-lg:     0 20px 60px rgba(0,0,0,0.5);
-  --shadow-accent: 0 8px 32px rgba(99,102,241,0.35);
+  --shadow-sm:     0 2px 12px rgba(0,0,0,0.35);
+  --shadow-md:     0 8px 32px rgba(0,0,0,0.45);
+  --shadow-lg:     0 20px 60px rgba(0,0,0,0.55);
+  --shadow-accent: 0 8px 32px rgba(249,115,22,0.35);
 
   /* Transitions */
   --ease:          0.22s cubic-bezier(0.4,0,0.2,1);

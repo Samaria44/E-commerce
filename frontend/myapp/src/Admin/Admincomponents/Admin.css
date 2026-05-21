@@ -8,19 +8,19 @@
 :root {
   --sidebar-width: 260px;
   --header-height: 68px;
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
+  --primary: #f97316;
+  --primary-dark: #973f00;
   --primary-light: #e0e7ff;
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --info: #3b82f6;
+  --info: #b6561e;
   --bg: #f1f5f9;
   --surface: #ffffff;
-  --sidebar-bg: #0f172a;
-  --sidebar-hover: #1e293b;
-  --sidebar-active: #6366f1;
-  --text-primary: #0f172a;
+  --sidebar-bg: #5f2a04;
+  --sidebar-hover: #faa364;
+  --sidebar-active: #f97316;
+  --text-primary: #502405;
   --text-secondary: #64748b;
   --text-muted: #94a3b8;
   --border: #e2e8f0;

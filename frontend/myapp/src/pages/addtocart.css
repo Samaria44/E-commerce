@@ -233,7 +233,7 @@ textarea.form-input { resize: none; height: 90px; }
 }
 .payment-opt.active {
   border-color: var(--accent);
-  background: rgba(99,102,241,0.08);
+  background: rgba(249,115,22,0.08);
   color: var(--white);
 }
 .payment-opt input { accent-color: var(--accent); }

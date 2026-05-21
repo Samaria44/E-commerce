@@ -38,10 +38,12 @@
 .search-card-img {
   overflow: hidden;
   height: 250px;
+  border-radius: 0;
 }
 .search-card-img img {
   width: 100%; height: 100%;
   object-fit: cover;
+  border-radius: 0;
   transition: transform 0.45s;
 }
 .search-card:hover .search-card-img img { transform: scale(1.05); }

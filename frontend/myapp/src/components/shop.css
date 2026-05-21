@@ -34,10 +34,12 @@
   position: relative;
   overflow: hidden;
   height: 300px;
+  border-radius: 0;
 }
 .shop-card-img img {
   width: 100%; height: 100%;
   object-fit: cover;
+  border-radius: 0;
   transition: transform 0.45s;
 }
 .shop-card:hover .shop-card-img img { transform: scale(1.05); }

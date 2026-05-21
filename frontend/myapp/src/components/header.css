@@ -42,7 +42,7 @@
   flex-shrink: 0;
   text-decoration: none;
 }
-.nav-logo-dot { color: #6366f1; }
+.nav-logo-dot { color: #f97316; }
 
 /* ── Nav list (desktop) ────────────────────────────── */
 .nav-list {
@@ -142,14 +142,14 @@
   transition: background 0.15s, color 0.15s;
 }
 .nav-dd-link:hover { background: rgba(255, 255, 255, 0.07); color: #fff; }
-.nav-dd-link.active { color: #6366f1; }
+.nav-dd-link.active { color: #f97316; }
 
 .nav-sub-arrow {
   color: rgba(255, 255, 255, 0.3);
   flex-shrink: 0;
   transition: color 0.15s;
 }
-.nav-dd-item:hover .nav-sub-arrow { color: #6366f1; }
+.nav-dd-item:hover .nav-sub-arrow { color: #f97316; }
 
 /* ── Sub-dropdown ──────────────────────────────────── */
 .nav-sub {
@@ -208,7 +208,7 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .nav-search-form:focus-within {
-  border-color: #6366f1;
+  border-color: #f97316;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
 .nav-search-input {
@@ -234,7 +234,7 @@
   cursor: pointer;
   transition: color 0.2s;
 }
-.nav-search-btn:hover { color: #6366f1; }
+.nav-search-btn:hover { color: #f97316; }
 
 /* Icon buttons (cart, user) */
 .nav-icon-btn {
@@ -261,7 +261,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background: #6366f1;
+  background: #f97316;
   color: #fff;
   border-radius: 50%;
   width: 18px;
@@ -413,7 +413,7 @@
     cursor: pointer;
     transition: color 0.2s;
   }
-  .mob-sub-toggle:hover { color: #6366f1; }
+  .mob-sub-toggle:hover { color: #f97316; }
 
   .mob-sub-list {
     list-style: none;
@@ -429,7 +429,7 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-  .mob-sub-list li a:hover { color: #6366f1; }
+  .mob-sub-list li a:hover { color: #f97316; }
 }
 
 @media (max-width: 480px) {
