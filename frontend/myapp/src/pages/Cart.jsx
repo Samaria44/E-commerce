@@ -1,77 +1,94 @@
 import { NavLink } from "react-router-dom";
+import { FiShoppingBag } from "react-icons/fi";
 import { useCart } from "../components/context/CartContext";
 import "./addtocart.css";
-import Button from "../components/Button";
 
 const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/150?text=No+Image";
 
+const imgSrc = img => {
+  if (!img) return PLACEHOLDER;
+  if (img.startsWith("http")) return img;
+  return `${BACKEND_ORIGIN}${img}`;
+};
+
 export default function Cart() {
   const { cartItems, removeFromCart, updateQuantity, totalPrice } = useCart();
 
-  const handleIncrease = (item) => updateQuantity(item.key, item.qty + 1);
-  const handleDecrease = (item) => {
+  const inc = item => updateQuantity(item.key, item.qty + 1);
+  const dec = item => {
     if (item.qty > 1) updateQuantity(item.key, item.qty - 1);
     else removeFromCart(item.key);
   };
 
-  const imgSrc = (img) => {
-    if (!img) return PLACEHOLDER;
-    if (img.startsWith("http")) return img;
-    return `${BACKEND_ORIGIN}${img}`;
-  };
-
   return (
-    <div className="cart-page">
-      <h1>Your Cart</h1>
+    <div className="page-container">
+      <div className="page-title-row">
+        <h1>Your Cart</h1>
+        <p>{cartItems.length} item{cartItems.length !== 1 ? "s" : ""}</p>
+      </div>
 
       {cartItems.length === 0 ? (
-        <p className="empty">Your cart is empty!</p>
+        <div className="cart-empty">
+          <FiShoppingBag size={48} style={{ color: "var(--muted)" }} />
+          <p>Your cart is empty.</p>
+          <NavLink to="/product">
+            <button className="cart-checkout-btn">Start Shopping</button>
+          </NavLink>
+        </div>
       ) : (
         <>
-       <table className="cart-table">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Details</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Subtotal</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {cartItems.map((item) => (
-      <tr key={item.key}>
-        <td>
-          <img src={imgSrc(item.image)} alt={item.name} className="cart-img" />
-        </td>
-        <td>
-          {/* <h1>{item.name}</h1> */}
-          {item.size && <p className="size">Size: {item.size}</p>}
-          {item.color && <p className="color">Color: {item.color}</p>}
-          {item.subcategory && <p className="subcategory">Sub: {item.subcategory}</p>}
-        </td>
-        <td>Rs {item.price}</td>
-        <td>
-          <div className="quantity-controls">
-            <button onClick={() => handleDecrease(item)}>-</button>
-            <span>{item.qty}</span>
-            <button onClick={() => handleIncrease(item)}>+</button>
+          <div className="cart-table-wrap">
+            <table className="cart-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Details</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map(item => (
+                  <tr key={item.key}>
+                    <td><img src={imgSrc(item.image)} alt={item.name} className="cart-img" /></td>
+                    <td>
+                      <div className="cart-item-name">{item.name}</div>
+                      <div className="cart-item-meta">
+                        {item.size && `Size: ${item.size}`}
+                        {item.color && ` · Color: ${item.color}`}
+                      </div>
+                    </td>
+                    <td>Rs {item.price}</td>
+                    <td>
+                      <div className="qty-ctrl">
+                        <button onClick={() => dec(item)}>−</button>
+                        <span>{item.qty}</span>
+                        <button onClick={() => inc(item)}>+</button>
+                      </div>
+                    </td>
+                    <td style={{ color: "var(--white)", fontWeight: 600 }}>
+                      Rs {(item.price * item.qty).toFixed(0)}
+                    </td>
+                    <td>
+                      <button className="cart-remove-btn" onClick={() => removeFromCart(item.key)}>
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </td>
-        <td>Rs {(item.price * item.qty).toFixed(2)}</td>
-        <td>
-          <Button label="Remove" onClick={() => removeFromCart(item.key)} />
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-          <div className="cart-summary">
-            <h2>Total: Rs {totalPrice.toFixed(2)}</h2>
+
+          <div className="cart-summary-bar">
+            <div className="cart-total-text">
+              Total: <span>Rs {totalPrice.toFixed(0)}</span>
+            </div>
             <NavLink to="/Checkout">
-              <button className="checkout-btn">Checkout</button>
+              <button className="cart-checkout-btn">Proceed to Checkout</button>
             </NavLink>
           </div>
         </>

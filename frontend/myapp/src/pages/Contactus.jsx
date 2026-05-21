@@ -1,88 +1,106 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { FiMapPin, FiPhone, FiMail, FiClock } from "react-icons/fi";
 import "./addtocart.css";
 
 const BACKEND_URL = `${process.env.REACT_APP_API_URL || "http://localhost:8000"}/contact`;
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: ""
-  });
-
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError]     = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const onChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post(BACKEND_URL, formData);
-      setSuccess("Your message has been sent!");
+      await axios.post(BACKEND_URL, form);
+      setSuccess("Message sent! We'll get back to you soon.");
       setError("");
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    } catch (err) {
-      console.error(err);
+      setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch {
       setError("Something went wrong. Please try again.");
       setSuccess("");
     }
   };
 
   return (
-    <div className="container">
-      <section className="contact-container">
-        <div className="contact-left">
-          <h2>Drop Us A Line</h2>
-          <p>
-            Thank you for your interest in contacting us. We value your feedback
-            and look forward to hearing from you.
-          </p>
+    <div className="page-container">
+      <div className="page-title-row">
+        <h1>Get in Touch</h1>
+        <p>We'd love to hear from you. Send us a message and we'll respond within 24 hours.</p>
+      </div>
+
+      <div className="contact-grid">
+        <div className="contact-form-card">
+          <h2>Send a Message</h2>
+          <p>Fill out the form below and our team will get back to you as soon as possible.</p>
 
           <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+            <div className="contact-form-row">
+              <div className="form-field">
+                <label className="form-label">Name</label>
+                <input className="form-input" type="text" name="name"
+                  value={form.name} onChange={onChange} placeholder="Your name" required />
+              </div>
+              <div className="form-field">
+                <label className="form-label">Email</label>
+                <input className="form-input" type="email" name="email"
+                  value={form.email} onChange={onChange} placeholder="your@email.com" required />
+              </div>
             </div>
-
-            <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
-            <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
-            <textarea name="message" placeholder="Message" rows="5" value={formData.message} onChange={handleChange} required></textarea>
-
-            <button type="submit">Send</button>
+            <div className="form-field">
+              <label className="form-label">Phone</label>
+              <input className="form-input" type="tel" name="phone"
+                value={form.phone} onChange={onChange} placeholder="+92 300 0000000" required />
+            </div>
+            <div className="form-field">
+              <label className="form-label">Subject</label>
+              <input className="form-input" type="text" name="subject"
+                value={form.subject} onChange={onChange} placeholder="How can we help?" required />
+            </div>
+            <div className="form-field">
+              <label className="form-label">Message</label>
+              <textarea className="form-input" name="message" rows="5"
+                value={form.message} onChange={onChange} placeholder="Write your message…" required />
+            </div>
+            <button type="submit" className="contact-submit-btn">Send Message</button>
+            {success && <p className="form-feedback success">{success}</p>}
+            {error   && <p className="form-feedback error">{error}</p>}
           </form>
-          {success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
-          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
         </div>
 
-        <div className="contact-right">
-          <h4>CONTACT DETAILS :</h4>
-          <p>Address: P.No. 16/104 BLK-3 BAHADUR YAR JUNG C H S BAHADUR ABAD</p>
-          <p>PHONE : +92 333 227 9263 (ZANE)</p>
-          <p>EMAIL: ask@wearzane.com</p>
+        <div className="contact-info-card">
+          <div className="contact-info-block">
+            <h4>Contact Details</h4>
+            <div className="contact-info-row"><FiMapPin size={14} className="contact-info-icon" />Bahadur Abad, Karachi, Pakistan</div>
+            <div className="contact-info-row"><FiPhone size={14} className="contact-info-icon" />+92 333 227 9263</div>
+            <div className="contact-info-row"><FiMail size={14} className="contact-info-icon" />ask@wearzane.com</div>
+            <div className="contact-info-row"><FiClock size={14} className="contact-info-icon" />Mon – Fri: 10am – 5pm</div>
+          </div>
 
-          <hr />
+          <hr className="contact-divider" />
 
-          <h4>Customer Support</h4>
-          <p>MON - FRI : 10am - 5pm</p>
-          <p>If you have any feedback, questions, or concerns, please don’t hesitate to reach out to us.</p>
+          <div className="contact-info-block">
+            <h4>Customer Support</h4>
+            <p style={{ fontSize: 14, color: "var(--muted-2)", lineHeight: 1.7 }}>
+              Have a question about your order? Our support team is here to help you every step of the way.
+            </p>
+          </div>
 
-          <hr />
+          <hr className="contact-divider" />
 
-          <h4>STAY CONNECTED</h4>
-          <div className="social-icons">
-            <a href="#"><i className="fab fa-facebook-f"></i></a>
-            <a href="#"><i className="fab fa-instagram"></i></a>
-            <a href="#"><i className="fab fa-whatsapp"></i></a>
+          <div className="contact-info-block">
+            <h4>Follow Us</h4>
+            <div className="social-row">
+              <a href="#" className="social-btn" aria-label="Facebook">f</a>
+              <a href="#" className="social-btn" aria-label="Instagram">in</a>
+              <a href="#" className="social-btn" aria-label="WhatsApp">w</a>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

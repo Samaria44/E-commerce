@@ -1,149 +1,195 @@
-/* ===================================================
-   HERO CAROUSEL — Redesigned
-   =================================================== */
-
-.carousel-containerr {
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
   position: relative;
   width: 100%;
-  height: 88vh;
-  max-height: 700px;
+  height: 92vh;
+  min-height: 580px;
+  max-height: 820px;
   overflow: hidden;
-  background: #0f172a;
+  background: var(--black);
 }
 
-/* Each slide */
-.slide {
+.hero-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1.2s ease;
 }
+.hero-slide.active { opacity: 1; z-index: 1; }
 
-.slide.active {
-  opacity: 1;
-  z-index: 1;
-}
-
-/* Slide image */
-.slide img {
-  width: 100%;
-  height: 100%;
+.hero-slide img {
+  width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.55);
+  filter: brightness(0.35);
 }
 
-/* Overlay gradient */
-.slide::after {
+/* Gradient overlay */
+.hero-slide::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%);
+  background: linear-gradient(
+    105deg,
+    rgba(10,10,15,0.85) 0%,
+    rgba(10,10,15,0.4) 55%,
+    transparent 100%
+  );
   z-index: 1;
 }
 
-/* Slide text */
-.slide-text {
+/* Content */
+.hero-content {
   position: absolute;
   top: 50%;
-  left: 8%;
+  left: var(--px);
   transform: translateY(-50%);
-  text-align: left;
-  color: #fff;
   z-index: 2;
-  max-width: 560px;
+  max-width: 620px;
 }
 
-.slide-text p,
-.slide-text > span:first-child {
-  font-size: 18px;
-  font-weight: 400;
-  color: #e91e63;
-  letter-spacing: 2px;
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 12px;
-  display: block;
-}
-
-.slide-text h1,
-.slide-text > span:not(:first-child):not(:last-child) {
-  font-size: clamp(28px, 4vw, 52px);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -1px;
+  color: var(--accent);
   margin-bottom: 20px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  padding: 6px 14px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: var(--r-full);
 }
 
-/* The text content (when it's just a string) */
-.slide-text {
-  font-size: clamp(22px, 3.5vw, 44px);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+.hero-title {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Shop Now button */
-#btnn {
-  display: inline-block;
-  margin-top: 28px;
-  background: #e91e63;
-  color: #fff;
+.hero-sub {
+  font-size: 16px;
+  color: var(--white-60);
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 440px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: var(--white);
   border: none;
-  padding: 14px 36px;
-  border-radius: 12px;
+  border-radius: var(--r-md);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s ease;
-  letter-spacing: 0.3px;
+  transition: all var(--ease);
   font-family: inherit;
 }
-
-#btnn:hover {
-  background: #c2185b;
+.hero-btn-primary:hover {
+  background: var(--accent-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(233,30,99,0.4);
+  box-shadow: var(--shadow-accent);
 }
 
-.shop-now-link {
-  text-decoration: none;
-}
-
-/* Navigation dots */
-.navigation {
-  position: absolute;
-  bottom: 28px;
-  width: 100%;
-  text-align: center;
-  z-index: 3;
-}
-
-.dot {
-  height: 8px;
-  width: 8px;
-  margin: 0 5px;
-  background: rgba(255,255,255,0.4);
-  border-radius: 50%;
-  display: inline-block;
+.hero-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--white-10);
+  color: var(--white);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--ease);
+  font-family: inherit;
+}
+.hero-btn-ghost:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: var(--white-30);
 }
 
-.dot.active {
-  background: #e91e63;
-  width: 24px;
+/* Dots */
+.hero-dots {
+  position: absolute;
+  bottom: 32px;
+  left: var(--px);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+.hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--white-30);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.hero-dot.active {
+  background: var(--accent);
+  width: 28px;
   border-radius: 4px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .carousel-containerr { height: 70vh; max-height: 500px; }
-  .slide-text { left: 5%; max-width: 90%; }
-  #btnn { padding: 12px 28px; font-size: 14px; }
+/* Stats bar */
+.hero-stats {
+  position: absolute;
+  bottom: 32px;
+  right: var(--px);
+  z-index: 3;
+  display: flex;
+  gap: 32px;
+}
+.hero-stat { text-align: right; }
+.hero-stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.hero-stat-label {
+  font-size: 11px;
+  color: var(--white-30);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
+@media (max-width: 768px) {
+  .hero { height: 75vh; }
+  .hero-content { left: var(--px-md); max-width: 90%; }
+  .hero-stats { display: none; }
+  .hero-dots { left: var(--px-md); }
+}
 @media (max-width: 480px) {
-  .carousel-containerr { height: 60vh; max-height: 400px; }
-  #btnn { padding: 10px 22px; font-size: 13px; margin-top: 20px; }
+  .hero { height: 65vh; min-height: 480px; }
+  .hero-content { left: var(--px-sm); }
+  .hero-dots { left: var(--px-sm); }
+  .hero-title { letter-spacing: -1px; }
 }

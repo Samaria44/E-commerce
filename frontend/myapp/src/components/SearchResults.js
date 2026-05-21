@@ -1,90 +1,64 @@
-import "./search.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./search.css";
 
-const BACKEND_ORIGIN = "http://localhost:8000";
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
+
+const fixImg = img => {
+  if (!img) return PLACEHOLDER;
+  if (img.startsWith("http")) return img;
+  return `${BACKEND_ORIGIN}/${img.replace(/^\/+/, "")}`;
+};
 
 export default function SearchResults() {
   const location = useLocation();
-  const navigate = useNavigate();
-
+  const navigate  = useNavigate();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading]   = useState(true);
 
-  const params = new URLSearchParams(location.search);
-  const query = params.get("query")?.toLowerCase().trim() || "";
+  const query = new URLSearchParams(location.search).get("query")?.toLowerCase().trim() || "";
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`${BACKEND_ORIGIN}/products`);
-        if (!res.ok) throw new Error("Failed to fetch products");
-        const data = await res.json();
-
-        const fixedProducts = data.map((product) => ({
-          ...product,
-          image: product.image?.startsWith("http")
-            ? product.image
-            : `${BACKEND_ORIGIN}/${product.image?.replace(/^\/+/, "")}`,
-        }));
-
-        setProducts(fixedProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
+    fetch(`${BACKEND_ORIGIN}/products`)
+      .then(r => r.json())
+      .then(d => setProducts(Array.isArray(d) ? d.map(p => ({ ...p, image: fixImg(p.image) })) : []))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
-  const filteredProducts = products.filter((product) => {
+  const filtered = products.filter(p => {
     if (!query) return true;
-    const queryWords = query.split(" ").filter(Boolean);
-    const name = product.name?.toLowerCase() || "";
-    const category = product.category?.toLowerCase() || "";
-    const description = product.description?.toLowerCase() || "";
-
-    return queryWords.some((word) => {
-      const regex = new RegExp(word, "i");
-      return regex.test(name) || regex.test(category) || regex.test(description);
-    });
+    const words = query.split(" ").filter(Boolean);
+    const name  = p.name?.toLowerCase() || "";
+    const cat   = p.category?.toLowerCase() || "";
+    const desc  = p.description?.toLowerCase() || "";
+    return words.some(w => name.includes(w) || cat.includes(w) || desc.includes(w));
   });
 
-  // Fixed: use _id (MongoDB field) not id
-  const handleProductClick = (product) => {
-    navigate(`/products/${product._id}`);
-  };
-
-  if (loading) return <p style={{ textAlign: "center", padding: "60px" }}>Loading...</p>;
+  if (loading) return <p className="page-loading">Searching…</p>;
 
   return (
-    <div className="search-results">
-      <h2>
-        Search Results for: <span className="query-text">{query}</span>
+    <div className="search-page">
+      <h2 className="search-heading">
+        Results for: <span className="search-query">"{query}"</span>
       </h2>
 
-      {filteredProducts.length === 0 ? (
-        <p className="no-results">No products found for "{query}".</p>
+      {filtered.length === 0 ? (
+        <p className="search-empty">No products found for "{query}".</p>
       ) : (
-        <div className="search-products-grid">
-          {filteredProducts.map((product) => (
-            <div
-              key={product._id}
-              className="search-product-card"
-              onClick={() => handleProductClick(product)}
-            >
-              <img
-                src={product.image || PLACEHOLDER}
-                alt={product.name}
-                onError={(e) => { e.target.src = PLACEHOLDER; }}
-              />
-              <div className="search-card-info">
-                <h3>{product.name}</h3>
-                <p className="search-card-category">{product.category}</p>
-                <p className="search-card-price">Rs {product.price}</p>
+        <div className="search-grid">
+          {filtered.map(p => (
+            <div key={p._id} className="search-card"
+              onClick={() => navigate(`/products/${p._id}`)}>
+              <div className="search-card-img">
+                <img src={p.image} alt={p.name}
+                  onError={e => { e.target.src = PLACEHOLDER; }} />
+              </div>
+              <div className="search-card-body">
+                <h3>{p.name}</h3>
+                <p className="search-card-cat">{p.category}</p>
+                <p className="search-card-price">Rs {p.price}</p>
               </div>
             </div>
           ))}

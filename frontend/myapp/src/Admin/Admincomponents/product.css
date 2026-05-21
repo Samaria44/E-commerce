@@ -380,3 +380,95 @@ td img {
     letter-spacing: 0.5px;
   }
 }
+
+/* ====== MULTI-IMAGE UPLOAD ====== */
+
+/* Thumbnail grid */
+.img-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.img-preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.img-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+}
+
+/* Newly added — show a blue ring */
+.img-preview-new {
+  border-color: #6366f1;
+}
+
+/* "Main" badge on first image */
+.img-primary-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Remove button on each thumbnail */
+.img-remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  background: rgba(15, 23, 42, 0.75);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  padding: 0;
+}
+.img-remove-btn:hover { background: #ef4444; }
+
+/* Upload drop zone */
+.img-upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 16px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 13px;
+  transition: all 0.2s;
+  background: #f8fafc;
+  text-align: center;
+}
+.img-upload-zone:hover {
+  border-color: #6366f1;
+  background: #f5f3ff;
+  color: #6366f1;
+}
+.img-upload-zone svg { font-size: 22px; }

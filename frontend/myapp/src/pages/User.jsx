@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { FiLogOut, FiUser, FiShoppingBag, FiHeart } from "react-icons/fi";
+import "./addtocart.css";
 
 export default function User() {
   const navigate = useNavigate();
@@ -9,78 +11,78 @@ export default function User() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "60vh",
-        fontFamily: "'Inter', 'Poppins', sans-serif",
-        gap: "24px",
-        padding: "40px 20px",
-      }}
-    >
-      {/* Avatar */}
-      <div
-        style={{
-          width: "80px",
-          height: "80px",
+    <div className="page-container" style={{ maxWidth: 600 }}>
+      <div style={{
+        background: "var(--dark-2)",
+        border: "1px solid var(--border)",
+        borderRadius: "var(--r-xl)",
+        padding: "48px 40px",
+        textAlign: "center",
+      }}>
+        {/* Avatar */}
+        <div style={{
+          width: 80, height: 80,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #e91e63, #c2185b)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "32px",
-          color: "#fff",
-          fontWeight: "700",
-          boxShadow: "0 8px 24px rgba(233,30,99,0.25)",
-        }}
-      >
-        U
-      </div>
+          background: "linear-gradient(135deg, var(--accent), var(--accent-2))",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          margin: "0 auto 20px",
+          boxShadow: "var(--shadow-accent)",
+        }}>
+          <FiUser size={32} color="#fff" />
+        </div>
 
-      <div style={{ textAlign: "center" }}>
-        <h2
-          style={{
-            fontSize: "22px",
-            fontWeight: "700",
-            color: "#111827",
-            marginBottom: "6px",
-          }}
-        >
+        <h2 style={{ fontSize: 24, fontWeight: 800, color: "var(--white)", marginBottom: 6, letterSpacing: "-0.3px" }}>
           Welcome back!
         </h2>
-        <p style={{ color: "#6b7280", fontSize: "14px" }}>
-          You are logged in as a customer
+        <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 36 }}>
+          You're logged in as a customer
         </p>
-      </div>
 
-      <button
-        onClick={handleLogout}
-        style={{
-          background: "#fff",
-          color: "#374151",
-          padding: "11px 28px",
-          borderRadius: "10px",
-          border: "1.5px solid #e5e7eb",
-          fontSize: "14px",
-          fontWeight: "600",
-          cursor: "pointer",
-          transition: "all 0.2s ease",
-          fontFamily: "inherit",
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.borderColor = "#ef4444";
-          e.target.style.color = "#ef4444";
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.borderColor = "#e5e7eb";
-          e.target.style.color = "#374151";
-        }}
-      >
-        Logout
-      </button>
+        {/* Quick links */}
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 36, flexWrap: "wrap" }}>
+          {[
+            { icon: <FiShoppingBag size={16} />, label: "My Orders", to: "/" },
+            { icon: <FiHeart size={16} />, label: "Wishlist", to: "/" },
+          ].map(item => (
+            <button key={item.label}
+              onClick={() => navigate(item.to)}
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "10px 20px",
+                background: "var(--dark-3)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--r-md)",
+                color: "var(--white-60)",
+                fontSize: 14, fontWeight: 500,
+                cursor: "pointer", fontFamily: "inherit",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.color = "var(--white)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--white-60)"; }}
+            >
+              {item.icon} {item.label}
+            </button>
+          ))}
+        </div>
+
+        <button onClick={handleLogout}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "11px 28px",
+            background: "transparent",
+            border: "1.5px solid var(--border)",
+            borderRadius: "var(--r-md)",
+            color: "var(--muted-2)",
+            fontSize: 14, fontWeight: 600,
+            cursor: "pointer", fontFamily: "inherit",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "#f87171"; e.currentTarget.style.color = "#f87171"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--muted-2)"; }}
+        >
+          <FiLogOut size={15} /> Logout
+        </button>
+      </div>
     </div>
   );
 }

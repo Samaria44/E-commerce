@@ -1,0 +1,11 @@
+samaria@0099
+samariatajamul563_db_user
+
+
+
+mongodb+srv://<db_username>:<db_password>@cluster0.wako6dj.mongodb.net/
+
+
+samaria@0099
+
+Samaria@0099

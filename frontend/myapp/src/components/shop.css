@@ -1,140 +1,89 @@
-/* ===================================================
-   SHOP / ALL PRODUCTS PAGE
-   =================================================== */
-
-.container {
-  padding: 60px 5%;
-  max-width: 1280px;
+/* ── Shop / Product Grid ─────────────────────────── */
+.shop-section {
+  padding: var(--py) var(--px);
+  max-width: var(--max-w);
   margin: 0 auto;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  box-sizing: border-box;
 }
-
-.container.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Section header */
-.page-header {
+.shop-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
-.page-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #111827;
-  letter-spacing: -0.5px;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 12px;
-}
-
-.page-title::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 3px;
-  background: #e91e63;
-  border-radius: 3px;
-}
-
-/* Product grid */
-.products-container {
+.products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 24px;
 }
 
-/* Product card */
-.product-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
+.shop-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: 1px solid #f3f4f6;
-  text-decoration: none;
-  color: #111827;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--ease);
 }
-
-.product-card:hover {
+.shop-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-  border-color: #e5e7eb;
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-2);
 }
 
-.product-image {
-  width: 100%;
-  height: 280px;
+.shop-card-img {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+.shop-card-img img {
+  width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
+  transition: transform 0.45s;
 }
+.shop-card:hover .shop-card-img img { transform: scale(1.05); }
 
-.product-card:hover .product-image {
-  transform: scale(1.04);
-}
-
-.product-footer {
-  background: #fff;
-  padding: 14px 16px;
+.shop-card-info {
+  padding: 16px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #f3f4f6;
 }
-
-.product-name {
+.shop-card-name {
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: var(--white);
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.arrow {
-  color: #9ca3af;
-  transition: all 0.2s ease;
+.shop-card-arrow {
+  color: var(--muted);
+  transition: all var(--ease);
   flex-shrink: 0;
   display: flex;
   align-items: center;
 }
-
-.product-card:hover .arrow {
+.shop-card:hover .shop-card-arrow {
   transform: translateX(4px);
-  color: #e91e63;
+  color: var(--accent);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .container { padding: 48px 4%; }
+.shop-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 80px 0;
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {
-  .page-title { font-size: 22px; }
-  .products-container { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-  .product-image { height: 220px; }
+  .shop-section { padding: var(--py-md) var(--px-md); }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+  .shop-card-img { height: 240px; }
 }
-
 @media (max-width: 480px) {
-  .container { padding: 32px 4%; }
-  .page-title { font-size: 20px; }
-  .products-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .product-image { height: 180px; }
-  .product-footer { padding: 10px 12px; }
-  .product-name { font-size: 13px; }
+  .shop-section { padding: var(--py-sm) var(--px-sm); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .shop-card-img { height: 200px; }
+  .shop-card-info { padding: 12px 14px; }
 }

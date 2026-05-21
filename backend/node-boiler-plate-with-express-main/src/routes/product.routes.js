@@ -1,6 +1,6 @@
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
+const multer  = require("multer");
+const path    = require("path");
 const {
   getAllProducts,
   getProductById,
@@ -8,32 +8,33 @@ const {
   updateProduct,
   deleteProduct,
   getNewArrivals,
-  getProductsByCategory, 
-  
+  getProductsByCategory,
 } = require("../controllers/productController");
 
 const router = express.Router();
 
-// 🧾 Multer setup
+// Multer — accept up to 6 images per upload
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../uploads")); // ✅ fix path (was inside routes folder before)
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+  destination: (req, file, cb) => cb(null, path.join(__dirname, "../uploads")),
+  filename:    (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB per file
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) cb(null, true);
+    else cb(new Error("Only image files are allowed"));
   },
 });
 
-const upload = multer({ storage });
-
-// ✅ Product routes
-router.get("/", getAllProducts);
-router.get("/new", getNewArrivals);
-router.get("/:id", getProductById);
-router.get("/category/:categoryName", getProductsByCategory); // 🆕 fetch by category
-router.post("/", upload.single("image"), addProduct);
-router.patch("/:id", upload.single("image"), updateProduct);
-router.delete("/:id", deleteProduct);
-
+// Routes
+router.get("/",                          getAllProducts);
+router.get("/new",                       getNewArrivals);
+router.get("/category/:categoryName",    getProductsByCategory);
+router.get("/:id",                       getProductById);
+router.post("/",   upload.array("images", 6), addProduct);
+router.patch("/:id", upload.array("images", 6), updateProduct);
+router.delete("/:id",                    deleteProduct);
 
 module.exports = router;

@@ -1,50 +1,36 @@
-import { useState, useEffect } from "react";
-import CaptureImg from "./Capture.PNG";
+import { FiArrowRight, FiZap } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import "./banner.css";
 
-export default function Last() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 200); // short delay for animation
-
-    return () => clearTimeout(timer);
-  }, []);
-
+export default function Banner() {
   return (
-    <div className={`last-section container ${isVisible ? "visible" : "hidden"}`}>
-      {/* Banner Section */}
-      <div className="banner">
-        <div className="banner-text">
-          <h2>
-            45% off only this week
-            <br />
-            and get special gift
-          </h2>
+    <div className="banner-section">
+      <div className="promo-banner">
+        <div className="promo-banner-text">
+          <div className="promo-tag"><FiZap size={10} /> Limited Time Offer</div>
+          <h2>Get <span>45% Off</span><br />This Week Only</h2>
           <p>
-            Pellentesque ac malesuada justo. Nulla vulputate lacus turpis et ultricies.
-            In malesuada turpis quis faucibus. Curabitur mollis lectus quis augue.
+            Exclusive deals on our premium collection. Don't miss out — offer ends Sunday.
+            Shop now and save big on your favourite styles.
           </p>
-          <button>Grab it now</button>
+          <Link to="/product">
+            <button className="promo-btn">Grab the Deal <FiArrowRight size={15} /></button>
+          </Link>
         </div>
-
-        <div className="banner-image">
-          <img src={CaptureImg} alt="Promo" />
+        <div className="promo-banner-img">
+          <img
+            src="https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Promo"
+          />
         </div>
       </div>
 
-      {/* Subscribe Section */}
-      <div className="subscribe">
-        <h3>Subscribe and get updates to our latest collections</h3>
-        <p>
-          Sed dictum ipsum elementum diam dapibus, ut sodales est maximus consectetur.
-          Fusce a mollis lorem. Orci varius natoque penatibus.
-        </p>
-        <form>
-          <input type="email" placeholder="Enter your email" required />
-          <button type="submit">Subscribe</button>
+      <div className="subscribe-section">
+        <h3>Stay Ahead of the Trend</h3>
+        <p>Subscribe to get early access to new arrivals, exclusive deals, and style inspiration delivered to your inbox.</p>
+        <form className="subscribe-form" onSubmit={e => e.preventDefault()}>
+          <input className="subscribe-input" type="email" placeholder="Enter your email address" required />
+          <button type="submit" className="subscribe-btn">Subscribe</button>
         </form>
       </div>
     </div>

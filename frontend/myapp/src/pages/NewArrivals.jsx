@@ -2,34 +2,28 @@ import { useEffect, useState } from "react";
 import Product from "../components/products";
 import axios from "axios";
 
+const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
+
 export default function NewArrivals() {
   const [products, setProducts] = useState([]);
-  const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
-  const PLACEHOLDER = "https://via.placeholder.com/300x300?text=No+Image";
 
   useEffect(() => {
-    const fetchNewArrivals = async () => {
-      try {
-        const res = await axios.get(`${BACKEND_ORIGIN}/products/new`);
-        const fetched = res.data.map((p) => ({
+    axios.get(`${BACKEND_ORIGIN}/products/new`)
+      .then(res => {
+        const fixed = res.data.map(p => ({
           ...p,
-          image:
-            Array.isArray(p.image) && p.image.length > 0
-              ? `${BACKEND_ORIGIN}${p.image[0]}`
-              : p.image
-              ? `${BACKEND_ORIGIN}${p.image}`
-              : PLACEHOLDER,
+          image: p.image
+            ? p.image.startsWith("http") ? p.image : `${BACKEND_ORIGIN}/${p.image.replace(/^\/+/, "")}`
+            : PLACEHOLDER,
         }));
-        setProducts(fetched);
-      } catch (err) {
-        console.error("Error fetching new arrivals:", err);
-      }
-    };
-    fetchNewArrivals();
+        setProducts(fixed);
+      })
+      .catch(() => {});
   }, []);
 
   if (!products.length)
-    return <p style={{ textAlign: "center" }}>No new arrivals.</p>;
+    return <p className="page-loading">No new arrivals yet.</p>;
 
-  return <Product products={products} title="New Arrivals" />;
+  return <Product products={products} label="Just Dropped" title="New Arrivals" />;
 }

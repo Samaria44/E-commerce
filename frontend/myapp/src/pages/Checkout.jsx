@@ -1,72 +1,41 @@
-import React, { useState } from "react";
-import { useCart } from "../components/context/CartContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../components/context/CartContext";
 import "./addtocart.css";
-import Button from "../components/Button";
 
 const BACKEND_ORIGIN = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const PLACEHOLDER = "https://via.placeholder.com/100?text=No+Image";
 
+const imgSrc = img => {
+  if (!img) return PLACEHOLDER;
+  if (img.startsWith("http")) return img;
+  return `${BACKEND_ORIGIN}${img}`;
+};
+
+const FIELDS = ["name", "email", "street", "city", "state", "pincode", "phone"];
+
 export default function Checkout() {
   const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
-
-  const [orderPlaced, setOrderPlaced] = useState(false);
-
-  const [orderDetails, setOrderDetails] = useState({
-    name: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    pincode: "",
-    phone: "",
-    paymentMethod: "cod",
-    cardNumber: "",
-    cardName: "",
-    expiry: "",
-    cvv: "",
+  const [placed, setPlaced] = useState(false);
+  const [form, setForm] = useState({
+    name: "", email: "", street: "", city: "", state: "", pincode: "", phone: "",
+    paymentMethod: "cod", cardNumber: "", cardName: "", expiry: "", cvv: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setOrderDetails({ ...orderDetails, [name]: value });
-  };
+  const total = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+  const onChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-
-  const handleOrder = async (e) => {
+  const handleOrder = async e => {
     e.preventDefault();
+    if (cartItems.length === 0) { alert("Your cart is empty!"); return; }
 
-    const { name, email, street, city, state, pincode, phone, paymentMethod } =
-      orderDetails;
-
-    if (!name || !email || !street || !city || !state || !pincode || !phone) {
-      alert("Please fill all required fields!");
-      return;
-    }
-
-    if (cartItems.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-
-    //  Map cart items to send productId
-    const orderProducts = cartItems.map((item) => ({
-      productId: item._id, 
-      qty: item.qty,
-      size: item.size || "-",
-    }));
-
-    const newOrder = {
-      customer: name,
-      email,
-      phone,
-      address: `${street}, ${city}, ${state} - ${pincode}`,
-      paymentMethod:
-        paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment",
-      products: orderProducts,
-      totalAmount: total + 200, // add shipping
+    const order = {
+      customer: form.name, email: form.email, phone: form.phone,
+      address: `${form.street}, ${form.city}, ${form.state} - ${form.pincode}`,
+      paymentMethod: form.paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment",
+      products: cartItems.map(i => ({ productId: i._id, qty: i.qty, size: i.size || "-" })),
+      totalAmount: total + 200,
       date: new Date().toLocaleDateString(),
     };
 
@@ -74,216 +43,132 @@ export default function Checkout() {
       const res = await fetch(`${BACKEND_ORIGIN}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newOrder),
+        body: JSON.stringify(order),
       });
-
-      if (!res.ok) throw new Error("Failed to save order");
-      await res.json();
-
-      setOrderPlaced(true);
-    } catch (error) {
-      console.error(" Error saving order:", error);
-      alert("Failed to place order. Please try again!");
+      if (!res.ok) throw new Error();
+      setPlaced(true);
+    } catch {
+      alert("Failed to place order. Please try again.");
     }
   };
 
-  const handleContinue = () => {
-    clearCart();
-    navigate("/");
-  };
-
-  const imgSrc = (img) => {
-    if (!img) return PLACEHOLDER;
-    if (img.startsWith("http://") || img.startsWith("https://")) return img;
-    return `${BACKEND_ORIGIN}${img}`;
-  };
-
-  if (orderPlaced) {
-    return (
-      <div className="confirmation-container">
-        <div className="confirmation-card">
-          <div className="confirmation-left">
-            <h1>Thank you for your purchase!</h1>
-            <p className="order-note">
-              Your order will be processed within 24 hours. You’ll receive an
-              email once it ships.
-            </p>
-
-            <h2>Billing Address</h2>
-            <div className="billing-info">
-              <p>
-                <strong>Name:</strong> {orderDetails.name}
-              </p>
-              <p>
-                <strong>Address:</strong>{" "}
-                {`${orderDetails.street}, ${orderDetails.city}, ${orderDetails.state} - ${orderDetails.pincode}`}
-              </p>
-              <p>
-                <strong>Phone:</strong> {orderDetails.phone}
-              </p>
-              <p>
-                <strong>Email:</strong> {orderDetails.email}
-              </p>
-            </div>
-
-            <Button label="Done" onClick={handleContinue} />
-          </div>
-
-          <div className="confirmation-right">
-            <h2>Order Summary</h2>
-            {cartItems.map((item) => (
-              <div key={item._id} className="summary-item">
+  if (placed) return (
+    <div className="confirm-wrap">
+      <div className="confirm-card">
+        <div className="confirm-left">
+          <h1>Order Confirmed 🎉</h1>
+          <p className="confirm-note">
+            Your order will be processed within 24 hours. You'll receive a confirmation once it ships.
+          </p>
+          <h2>Billing Address</h2>
+          <p className="billing-row"><strong>Name:</strong> {form.name}</p>
+          <p className="billing-row"><strong>Address:</strong> {form.street}, {form.city}, {form.state} - {form.pincode}</p>
+          <p className="billing-row"><strong>Phone:</strong> {form.phone}</p>
+          <p className="billing-row"><strong>Email:</strong> {form.email}</p>
+          <button className="done-btn" onClick={() => { clearCart(); navigate("/"); }}>
+            Continue Shopping
+          </button>
+        </div>
+        <div className="confirm-right">
+          <h2>Order Summary</h2>
+          <div className="summary-items">
+            {cartItems.map(item => (
+              <div key={item._id} className="summary-item-row">
                 <img src={imgSrc(item.image)} alt={item.name} />
-                <div className="item-details">
+                <div className="summary-item-info">
                   <h4>{item.name}</h4>
-                  <p>Qty: {item.qty} | Size: {item.size || "-"}</p>
+                  <p>Qty: {item.qty} · Size: {item.size || "-"}</p>
                 </div>
-                <span className="item-price">Rs {item.price * item.qty}</span>
               </div>
             ))}
-            <div className="summary-totals">
-              <p>
-                <span>Subtotal</span>
-                <span>Rs {total}</span>
-              </p>
-              <p>
-                <span>Shipping</span>
-                <span>Rs 200</span>
-              </p>
-              <hr />
-              <p className="order-total">
-                <strong>Total</strong>
-                <strong>Rs {total + 200}</strong>
-              </p>
+          </div>
+          <div className="confirm-totals">
+            <p><span>Subtotal</span><span>Rs {total}</span></p>
+            <p><span>Shipping</span><span>Rs 200</span></p>
+            <div className="confirm-total-final">
+              <span>Total</span><span>Rs {total + 200}</span>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <div className="checkout-page">
-      <h1>Checkout</h1>
-      <div className="checkout-container">
-        <form className="checkout-form" onSubmit={handleOrder}>
-          <h2>Shipping Details</h2>
+    <div className="page-container">
+      <div className="page-title-row"><h1>Checkout</h1></div>
 
-          {["name", "email", "street", "city", "state", "pincode", "phone"].map(
-            (field) => (
-              <React.Fragment key={field}>
-                <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
-                <input
-                  type={field === "email" ? "email" : "text"}
-                  name={field}
-                  value={orderDetails[field]}
-                  onChange={handleChange}
-                  placeholder={`Enter your ${field}`}
-                />
-              </React.Fragment>
-            )
-          )}
-
-          <h2>Payment Method</h2>
-          <div className="payment-options">
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cod"
-                checked={orderDetails.paymentMethod === "cod"}
-                onChange={handleChange}
-              />{" "}
-              Cash on Delivery
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="card"
-                checked={orderDetails.paymentMethod === "card"}
-                onChange={handleChange}
-              />{" "}
-              Credit / Debit Card
-            </label>
+      <div className="checkout-layout">
+        <form onSubmit={handleOrder}>
+          <div className="checkout-form-card" style={{ marginBottom: 24 }}>
+            <h2>Shipping Details</h2>
+            {FIELDS.map(f => (
+              <div className="form-field" key={f}>
+                <label className="form-label">{f.charAt(0).toUpperCase() + f.slice(1)}</label>
+                <input className="form-input" type={f === "email" ? "email" : "text"}
+                  name={f} value={form[f]} onChange={onChange}
+                  placeholder={`Enter your ${f}`} required />
+              </div>
+            ))}
           </div>
 
-          {orderDetails.paymentMethod === "card" && (
-            <div className="card-details">
-              <label>Card Number</label>
-              <input
-                type="text"
-                name="cardNumber"
-                value={orderDetails.cardNumber}
-                onChange={handleChange}
-                maxLength="16"
-              />
-              <label>Cardholder Name</label>
-              <input
-                type="text"
-                name="cardName"
-                value={orderDetails.cardName}
-                onChange={handleChange}
-              />
-              <div className="card-row">
-                <div>
-                  <label>Expiry</label>
-                  <input
-                    type="text"
-                    name="expiry"
-                    value={orderDetails.expiry}
-                    onChange={handleChange}
-                    placeholder="MM/YY"
-                    maxLength="5"
-                  />
-                </div>
-                <div>
-                  <label>CVV</label>
-                  <input
-                    type="password"
-                    name="cvv"
-                    value={orderDetails.cvv}
-                    onChange={handleChange}
-                    maxLength="3"
-                  />
+          <div className="checkout-form-card">
+            <h2>Payment Method</h2>
+            <div className="payment-opts">
+              {[["cod", "Cash on Delivery"], ["card", "Credit / Debit Card"]].map(([val, label]) => (
+                <label key={val} className={`payment-opt${form.paymentMethod === val ? " active" : ""}`}>
+                  <input type="radio" name="paymentMethod" value={val}
+                    checked={form.paymentMethod === val} onChange={onChange} />
+                  {label}
+                </label>
+              ))}
+            </div>
+
+            {form.paymentMethod === "card" && (
+              <div className="card-fields">
+                {[["cardNumber", "Card Number", "text", "16"], ["cardName", "Cardholder Name", "text", ""]].map(([n, l, t, max]) => (
+                  <div className="form-field" key={n}>
+                    <label className="form-label">{l}</label>
+                    <input className="form-input" type={t} name={n} value={form[n]}
+                      onChange={onChange} maxLength={max || undefined} />
+                  </div>
+                ))}
+                <div className="form-row">
+                  <div className="form-field">
+                    <label className="form-label">Expiry</label>
+                    <input className="form-input" type="text" name="expiry"
+                      value={form.expiry} onChange={onChange} placeholder="MM/YY" maxLength="5" />
+                  </div>
+                  <div className="form-field">
+                    <label className="form-label">CVV</label>
+                    <input className="form-input" type="password" name="cvv"
+                      value={form.cvv} onChange={onChange} maxLength="3" />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <button type="submit" className="place-order-btn">
-            Place Order
-          </button>
+            <button type="submit" className="place-order-btn">Place Order</button>
+          </div>
         </form>
 
-        <div className="order-summary-section">
+        <div className="order-summary-card">
           <h2>Order Summary</h2>
-          <div className="order-summary-box">
-            {cartItems.map((item) => (
-              <div key={item._id} className="summary-product">
+          <div className="summary-items">
+            {cartItems.map(item => (
+              <div key={item._id} className="summary-item-row">
                 <img src={imgSrc(item.image)} alt={item.name} />
-                <div className="summary-product-info">
+                <div className="summary-item-info">
                   <h4>{item.name}</h4>
-                  <p>Size: {item.size || "-"}</p>
-                  <p>Qty: {item.qty}</p>
-                  <p>Price: Rs {item.price * item.qty}</p>
+                  <p>Size: {item.size || "-"} · Qty: {item.qty}</p>
+                  <p style={{ color: "var(--accent)", fontWeight: 600 }}>Rs {item.price * item.qty}</p>
                 </div>
               </div>
             ))}
-
-            <div className="summary-item">
-              <span>Subtotal</span>
-              <span>Rs {total}</span>
-            </div>
-            <div className="summary-item">
-              <span>Shipping</span>
-              <span>Rs 200</span>
-            </div>
-            <div className="summary-item total">
-              <strong>Total</strong>
-              <strong>Rs {total + 200}</strong>
-            </div>
           </div>
+          <div className="summary-line"><span>Subtotal</span><span>Rs {total}</span></div>
+          <div className="summary-line"><span>Shipping</span><span>Rs 200</span></div>
+          <div className="summary-line total"><span>Total</span><span>Rs {total + 200}</span></div>
         </div>
       </div>
     </div>
