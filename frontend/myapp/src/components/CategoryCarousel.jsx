@@ -4,10 +4,10 @@ import { FiChevronLeft, FiChevronRight, FiArrowRight } from "react-icons/fi";
 import "./products.css";
 
 const categories = [
-  { title: "Men", image: "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg", route: "/category/men" },
-  { title: "Women", image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg", route: "/category/Women" },
-  { title: "Kids", image: "https://images.pexels.com/photos/35537/child-children-girl-happy.jpg", route: "/category/kids" },
-  { title: "New Arrivals", image: "https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg", route: "/products/new" },
+  { title: "Men",          image: "https://images.pexels.com/photos/19196517/pexels-photo-19196517.jpeg", route: "/category/men" },
+  { title: "Women",        image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",   route: "/category/Women" },
+  { title: "Kids",         image: "https://images.pexels.com/photos/35537/child-children-girl-happy.jpg", route: "/category/kids" },
+  { title: "New Arrivals", image: "https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg",   route: "/products/new" },
 ];
 
 export default function CategoryCarousel() {

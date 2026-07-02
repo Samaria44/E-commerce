@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { FiShoppingBag, FiMapPin, FiPhone, FiMail, FiClock } from "react-icons/fi";
+import "./footer.css";
 
 export default function Footer() {
   return (
@@ -40,7 +41,7 @@ export default function Footer() {
             <h4>Contact</h4>
             <ul>
               <li className="footer-contact-row"><FiMapPin size={14} className="footer-contact-icon" />Bahadur Abad, Karachi</li>
-              <li className="footer-contact-row"><FiPhone size={14} className="footer-contact-icon" />+92 333 227 9263</li>
+              <li className="footer-contact-row"><FiPhone size={14} className="footer-contact-icon" />+92 317 803 9368</li>
               <li className="footer-contact-row"><FiMail size={14} className="footer-contact-icon" />ask@wearzane.com</li>
               <li className="footer-contact-row"><FiClock size={14} className="footer-contact-icon" />Mon–Fri: 10am–5pm</li>
             </ul>

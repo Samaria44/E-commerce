@@ -31,8 +31,8 @@
 .orderdetail-container > h2 span {
   font-family: 'Courier New', monospace;
   font-size: 16px;
-  background: #e0e7ff;
-  color: #4f46e5;
+  background: #fff3e0;
+  color: #ea6c00;
   padding: 3px 10px;
   border-radius: 6px;
 }
@@ -75,7 +75,7 @@
   padding: 10px 14px;
   background: #f8fafc;
   border-radius: 8px;
-  border-left: 3px solid #6366f1;
+  border-left: 3px solid #f97316;
 }
 
 .orderdetail-container > p strong {

@@ -8,21 +8,21 @@
 :root {
   --sidebar-width: 260px;
   --header-height: 68px;
-  --primary: #f97316;
-  --primary-dark: #973f00;
-  --primary-light: #e0e7ff;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --info: #b6561e;
-  --bg: #f1f5f9;
-  --surface: #ffffff;
-  --sidebar-bg: #5f2a04;
-  --sidebar-hover: #faa364;
+  --primary:        #f97316;
+  --primary-dark:   #ea6c00;
+  --primary-light:  #fff3e0;
+  --success:        #10b981;
+  --warning:        #f59e0b;
+  --danger:         #ef4444;
+  --info:           #3b82f6;
+  --bg:             #f5ede4;
+  --surface:        #ffffff;
+  --sidebar-bg:     #1a1008;
+  --sidebar-hover:  #2e1c0e;
   --sidebar-active: #f97316;
-  --text-primary: #502405;
+  --text-primary:   #1a0f08;
   --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  --text-muted:     #94a3b8;
   --border: #e2e8f0;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
@@ -118,7 +118,7 @@
   background: var(--primary);
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+  box-shadow: 0 4px 12px rgba(249,115,22,0.35);
 }
 
 .sidebar-nav-icon {

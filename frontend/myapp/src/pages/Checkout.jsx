@@ -9,7 +9,8 @@ const PLACEHOLDER = "https://via.placeholder.com/100?text=No+Image";
 const imgSrc = img => {
   if (!img) return PLACEHOLDER;
   if (img.startsWith("http")) return img;
-  return `${BACKEND_ORIGIN}${img}`;
+  const clean = img.startsWith("/") ? img : `/${img}`;
+  return `${BACKEND_ORIGIN}${clean}`;
 };
 
 const FIELDS = ["name", "email", "street", "city", "state", "pincode", "phone"];

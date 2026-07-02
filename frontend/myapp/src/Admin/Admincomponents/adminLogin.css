@@ -35,7 +35,7 @@
 }
 .login-brand-icon {
   width: 36px; height: 36px;
-  background: #6366f1;
+  background: #f97316;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -94,7 +94,7 @@
   box-sizing: border-box;
 }
 .input-group input:focus {
-  border-color: #6366f1;
+  border-color: #f97316;
   box-shadow: 0 0 0 3px rgba(99,102,241,0.25);
 }
 .input-group input::placeholder { color: #6b7280; }
@@ -102,7 +102,7 @@
 .login-btn {
   width: 100%;
   padding: 13px;
-  background: #6366f1;
+  background: #f97316;
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -114,9 +114,9 @@
   margin-top: 4px;
 }
 .login-btn:hover {
-  background: #4f46e5;
+  background: #ea6c00;
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(99,102,241,0.35);
+  box-shadow: 0 8px 32px rgba(249,115,22,0.35);
 }
 
 .login-hint {

@@ -42,7 +42,7 @@
 }
 
 .add-btn {
-  background: #6366f1;
+  background: #f97316;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -54,9 +54,9 @@
 }
 
 .add-btn:hover {
-  background: #4f46e5;
+  background: #ea6c00;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+  box-shadow: 0 4px 14px rgba(249,115,22,0.3);
 }
 
 /* ====== TABLE ====== */
@@ -105,7 +105,7 @@
 
 /* Action Icons */
 .edit {
-  color: #6366f1;
+  color: #f97316;
   cursor: pointer;
   font-size: 17px;
   padding: 6px;
@@ -115,8 +115,8 @@
 }
 
 .edit:hover {
-  background: #e0e7ff;
-  color: #4f46e5;
+  background: #fff3e0;
+  color: #ea6c00;
 }
 
 .delete {
@@ -202,14 +202,14 @@
 }
 
 .popup-form input:focus {
-  border-color: #6366f1;
+  border-color: #f97316;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
 }
 
 .save-btn {
   width: 100%;
-  background: #6366f1;
+  background: #f97316;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -221,6 +221,6 @@
 }
 
 .save-btn:hover {
-  background: #4f46e5;
-  box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+  background: #ea6c00;
+  box-shadow: 0 4px 14px rgba(249,115,22,0.3);
 }

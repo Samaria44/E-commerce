@@ -34,6 +34,7 @@ import Orders from "./Admin/Admincomponents/Order";
 import Users from "./Admin/Admincomponents/Users";
 import OrderDetail from "./Admin/Admincomponents/Orderdetail";
 
+
 function App() {
   const router = createBrowserRouter([
     // ── Frontend routes (with Header + Footer) ──
@@ -87,6 +88,7 @@ function App() {
   return (
     <CartProvider>
       <RouterProvider router={router} />
+   
     </CartProvider>
   );
 }

@@ -9,7 +9,9 @@ const PLACEHOLDER = "https://via.placeholder.com/150?text=No+Image";
 const imgSrc = img => {
   if (!img) return PLACEHOLDER;
   if (img.startsWith("http")) return img;
-  return `${BACKEND_ORIGIN}${img}`;
+  // Handle both /uploads/file and uploads/file
+  const clean = img.startsWith("/") ? img : `/${img}`;
+  return `${BACKEND_ORIGIN}${clean}`;
 };
 
 export default function Cart() {

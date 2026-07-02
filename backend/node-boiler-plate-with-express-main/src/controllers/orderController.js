@@ -2,9 +2,9 @@
 
 // orderController.js
 const Order = require("../models/orderModel");
-const Product = require("../models/productModel"); // <-- import Product here
+const Product = require("../models/productModel"); 
+const sendWhatsApp = require("../services/whatsappService");
 
-// your existing code
 
 // Get all orders
 exports.getAllOrders = async (req, res) => {
@@ -76,6 +76,30 @@ exports.addOrder = async (req, res) => {
     });
 
     const savedOrder = await newOrder.save();
+    // Send WhatsApp Confirmation
+try {
+  const message = `🛍️ ZAVARO
+
+Hello ${customer},
+
+✅ Your order has been placed successfully!
+
+💰 Total: Rs.${totalAmount}
+
+📍 Address:
+${address}
+
+🚚 We'll contact you soon.
+
+Thank you for shopping with ZAVARO ❤️`;
+
+  await sendWhatsApp(phone.replace("+", ""), message);
+
+  console.log("WhatsApp message sent successfully.");
+} catch (err) {
+  console.error("WhatsApp Error:", err.message);
+  // Don't stop order saving if WhatsApp fails
+}
 
     // Populate product info (select only required fields)
     const populatedOrder = await savedOrder.populate(

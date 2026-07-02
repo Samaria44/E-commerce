@@ -35,7 +35,7 @@
   margin: 0;
 }
 
-.products-header button {
+.products-header  on {
   background: #f97316;
   color: #fff;
   border: none;
@@ -53,7 +53,7 @@
 .products-header button:hover {
   background: #f97316;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+  box-shadow: 0 4px 14px rgba(249,115,22,0.3);
 }
 
 /* ====== TABLE ====== */
@@ -126,7 +126,7 @@ td img {
 }
 
 .edit-icon:hover, .icon-edit:hover {
-  background: #e0e7ff;
+  background: #fff3e0;
   color: #f97316;
 }
 
@@ -217,9 +217,9 @@ td img {
 .popup-form select:focus,
 .styled-input:focus,
 .styled-select:focus {
-  border-color: #6366f1;
+  border-color: #f97316;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
 }
 
 .popup-form input::placeholder,
@@ -411,7 +411,7 @@ td img {
 
 /* Newly added — show a blue ring */
 .img-preview-new {
-  border-color: #6366f1;
+  border-color: #f97316;
 }
 
 /* "Main" badge on first image */
@@ -419,7 +419,7 @@ td img {
   position: absolute;
   top: 6px;
   left: 6px;
-  background: #6366f1;
+  background: #f97316;
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -467,8 +467,8 @@ td img {
   text-align: center;
 }
 .img-upload-zone:hover {
-  border-color: #6366f1;
+  border-color: #f97316;
   background: #f5f3ff;
-  color: #6366f1;
+  color: #f97316;
 }
 .img-upload-zone svg { font-size: 22px; }

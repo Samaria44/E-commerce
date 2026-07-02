@@ -119,10 +119,12 @@ exports.getNewArrivals = async (req, res) => {
   }
 };
 
-// GET products by category
+// GET products by category — case-insensitive match
 exports.getProductsByCategory = async (req, res) => {
   try {
-    const products = await Product.find({ category: req.params.categoryName });
+    const products = await Product.find({
+      category: { $regex: new RegExp(`^${req.params.categoryName}$`, "i") }
+    });
     if (products.length === 0)
       return res.status(404).json({ message: "No products found for this category" });
     res.json(products.map(normalise));

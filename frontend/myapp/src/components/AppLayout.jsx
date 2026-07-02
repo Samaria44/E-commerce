@@ -1,12 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./footer";
 import Header from "./header";
+import Footer from "./footer";
+import Chatbot from "./Chatbot";
 
 export default function AppLayout() {
   return (
-<> <Header/>
-<Outlet/>
-  <Footer />
-</>
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+      <Chatbot />
+    </>
   );
 }
